@@ -272,88 +272,12 @@ export default function App() {
       </header>
 
       <main>
-        {/* Hero Section */}
-        <section id="home" className="relative min-h-screen flex items-center overflow-hidden pt-16 pb-24 lg:pt-32 lg:pb-40">
+        {/* Hero Section - Full Screen Video Only */}
+        <section id="home" className="relative h-screen w-full overflow-hidden">
           <VideoBackground />
           
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="lg:grid lg:grid-cols-12 lg:gap-8 items-center">
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-8 lg:text-left"
-              >
-                <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-brand-red/20 border border-brand-red/30 text-brand-red mb-6">
-                  <Star className="w-4 h-4 fill-current" />
-                  <span className="text-xs font-black uppercase tracking-widest">Líder em Anápolis</span>
-                </div>
-                <motion.h1 
-                  initial={{ opacity: 0, scale: 1.5, filter: 'blur(20px)' }}
-                  animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-                  transition={{ duration: 1.2, ease: "easeOut" }}
-                  className="text-5xl tracking-tighter font-black text-white sm:text-7xl md:text-8xl lg:text-9xl leading-[0.85] uppercase italic"
-                >
-                  <span className="block">Emerson Lima</span>
-                  <span className="block text-brand-red">Mudança</span>
-                </motion.h1>
-                <motion.p 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8, duration: 0.8 }}
-                  className="mt-8 text-lg text-white/80 sm:text-2xl lg:text-xl xl:text-2xl leading-relaxed max-w-2xl font-medium tracking-wide"
-                >
-                  O cuidado que a sua família merece. Especialistas em mudanças residenciais e comerciais em Anápolis e região com o máximo de segurança.
-                </motion.p>
-                <div className="mt-10 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0 flex flex-col sm:flex-row gap-4">
-                  <a 
-                    href={WHATSAPP_LINK}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center px-8 py-4 border border-transparent text-base font-black rounded-2xl text-white bg-brand-red hover:bg-brand-dark-red md:text-lg shadow-xl shadow-brand-red/30 transition-all hover:-translate-y-1 active:translate-y-0"
-                  >
-                    Chamar no WhatsApp
-                    <ChevronRight className="ml-2 w-5 h-5" />
-                  </a>
-                  <a 
-                    href="#services"
-                    className="flex items-center justify-center px-8 py-4 border-2 border-white/20 text-base font-bold rounded-2xl text-white bg-white/10 backdrop-blur-md hover:bg-white/20 md:text-lg transition-all"
-                  >
-                    Ver Serviços
-                  </a>
-                </div>
-                
-                {/* Highlights */}
-                <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6">
-                  {highlights.map((h, i) => (
-                    <div key={i} className="flex items-center space-x-3 text-sm font-bold text-white/70">
-                      <div className="p-2 bg-white/10 backdrop-blur-md rounded-lg border border-white/10">
-                        {h.icon}
-                      </div>
-                      <span>{h.text}</span>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            </div>
-          </div>
-
-          {/* Scroll Indicator */}
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 2, duration: 1 }}
-            className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center"
-          >
-            <span className="text-white/40 text-[10px] uppercase tracking-[0.4em] mb-4 font-bold">Descubra</span>
-            <div className="w-[1px] h-12 bg-gradient-to-b from-brand-red to-transparent">
-              <motion.div 
-                animate={{ y: [0, 48, 0] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                className="w-full h-4 bg-white"
-              />
-            </div>
-          </motion.div>
+          {/* Subtle bottom fade to transition to content */}
+          <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white to-transparent z-10"></div>
         </section>
 
         {/* About Us */}

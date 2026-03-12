@@ -37,8 +37,8 @@ const SOCIAL_LINKS = {
 };
 
 const HERO_VIDEOS = [
-  "oejPJpW2UcM",
-  "aZz4Gl2hiAE"
+  "aZz4Gl2hiAE",
+  "oejPJpW2UcM"
 ];
 
 function VideoBackground() {
@@ -70,9 +70,13 @@ function VideoBackground() {
           ></iframe>
         </motion.div>
       </AnimatePresence>
-      {/* Overlay with brand colors */}
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-navy/90 via-brand-navy/70 to-brand-red/40 mix-blend-multiply"></div>
-      <div className="absolute inset-0 bg-brand-navy/20"></div>
+      {/* Cinematic Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-brand-navy/95 via-brand-navy/60 to-brand-navy/95"></div>
+      <div className="absolute inset-0 bg-brand-red/10 mix-blend-overlay"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(10,10,26,0.8)_100%)]"></div>
+      
+      {/* Scanline Effect */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%),linear-gradient(90deg,rgba(255,0,0,0.03),rgba(0,255,0,0.01),rgba(0,0,255,0.03))] z-[5] bg-[length:100%_2px,3px_100%] pointer-events-none opacity-20"></div>
     </div>
   );
 }
@@ -284,13 +288,23 @@ export default function App() {
                   <Star className="w-4 h-4 fill-current" />
                   <span className="text-xs font-black uppercase tracking-widest">Líder em Anápolis</span>
                 </div>
-                <h1 className="text-4xl tracking-tight font-black text-white sm:text-6xl md:text-7xl leading-tight">
-                  <span className="block">Mudança segura e rápida</span>
-                  <span className="block text-brand-red">em Anápolis e região.</span>
-                </h1>
-                <p className="mt-6 text-lg text-white/80 sm:text-xl lg:text-lg xl:text-xl leading-relaxed max-w-2xl">
-                  Todo o cuidado que a sua família merece. Especialistas em mudanças residenciais, comerciais e fretes interestaduais com compromisso e pontualidade.
-                </p>
+                <motion.h1 
+                  initial={{ opacity: 0, scale: 1.5, filter: 'blur(20px)' }}
+                  animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+                  transition={{ duration: 1.2, ease: "easeOut" }}
+                  className="text-5xl tracking-tighter font-black text-white sm:text-7xl md:text-8xl lg:text-9xl leading-[0.85] uppercase italic"
+                >
+                  <span className="block">Emerson Lima</span>
+                  <span className="block text-brand-red">Mudança</span>
+                </motion.h1>
+                <motion.p 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8, duration: 0.8 }}
+                  className="mt-8 text-lg text-white/80 sm:text-2xl lg:text-xl xl:text-2xl leading-relaxed max-w-2xl font-medium tracking-wide"
+                >
+                  O cuidado que a sua família merece. Especialistas em mudanças residenciais e comerciais em Anápolis e região com o máximo de segurança.
+                </motion.p>
                 <div className="mt-10 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0 flex flex-col sm:flex-row gap-4">
                   <a 
                     href={WHATSAPP_LINK}
@@ -323,6 +337,23 @@ export default function App() {
               </motion.div>
             </div>
           </div>
+
+          {/* Scroll Indicator */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 2, duration: 1 }}
+            className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center"
+          >
+            <span className="text-white/40 text-[10px] uppercase tracking-[0.4em] mb-4 font-bold">Descubra</span>
+            <div className="w-[1px] h-12 bg-gradient-to-b from-brand-red to-transparent">
+              <motion.div 
+                animate={{ y: [0, 48, 0] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                className="w-full h-4 bg-white"
+              />
+            </div>
+          </motion.div>
         </section>
 
         {/* About Us */}
@@ -697,6 +728,21 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      {/* Floating WhatsApp Button */}
+      <a 
+        href={WHATSAPP_LINK}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-16 h-16 bg-[#25D366] text-white rounded-full shadow-2xl hover:scale-110 transition-transform duration-300 group"
+        aria-label="Falar no WhatsApp"
+      >
+        <span className="absolute -top-12 right-0 bg-white text-brand-navy text-xs font-black px-3 py-2 rounded-xl shadow-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-brand-navy/5">
+          Fale Conosco agora!
+        </span>
+        <div className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-20"></div>
+        <MessageCircle className="w-8 h-8 fill-current" />
+      </a>
     </div>
   );
 }

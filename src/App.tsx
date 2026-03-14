@@ -39,10 +39,37 @@ const SOCIAL_LINKS = {
   tiktok: "https://www.tiktok.com/@emersonlima98?is_from_webapp=1&sender_device=pc"
 };
 
-const HERO_IMAGES = [
-  "https://i.postimg.cc/m2jbX2gf/Propaganda_1.png",
-  "https://i.postimg.cc/VLmfWb1K/Propaganda_2.png",
-  "https://i.postimg.cc/BQpqYQQx/Propaganda_3.png"
+const HERO_ITEMS = [
+  {
+    type: 'video',
+    url: 'https://ik.imagekit.io/marioigor82/Propaganda%20Emerson%20Lima%20-%20Video.mp4',
+    showText: true,
+    overlay: 'whitish'
+  },
+  {
+    type: 'image',
+    url: 'https://i.postimg.cc/m2jbX2gf/Propaganda_1.png',
+    showText: false,
+    overlay: 'none'
+  },
+  {
+    type: 'image',
+    url: 'https://i.postimg.cc/VLmfWb1K/Propaganda_2.png',
+    showText: false,
+    overlay: 'none'
+  },
+  {
+    type: 'image',
+    url: 'https://i.postimg.cc/BQpqYQQx/Propaganda_3.png',
+    showText: false,
+    overlay: 'none'
+  },
+  {
+    type: 'video',
+    url: 'https://ik.imagekit.io/marioigor82/Propaganda%20Emerson%20Lima%20-%20Video.mp4',
+    showText: false,
+    overlay: 'none'
+  }
 ];
 
 function HeroSlider() {
@@ -50,37 +77,94 @@ function HeroSlider() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % HERO_IMAGES.length);
-    }, 6000);
+      setCurrentIndex((prev) => (prev + 1) % HERO_ITEMS.length);
+    }, 8000); // 8 seconds per slide
     return () => clearInterval(interval);
   }, []);
+
+  const currentItem = HERO_ITEMS[currentIndex];
 
   return (
     <div className="absolute inset-0 w-full h-full overflow-hidden">
       <AnimatePresence mode="wait">
         <motion.div
-          key={HERO_IMAGES[currentIndex]}
-          initial={{ opacity: 0, scale: 1.1 }}
-          animate={{ opacity: 1, scale: 1 }}
+          key={currentIndex}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 1.5 }}
           className="absolute inset-0 w-full h-full"
         >
-          <img
-            src={HERO_IMAGES[currentIndex]}
-            alt={`Propaganda ${currentIndex + 1}`}
-            className="w-full h-full object-cover"
-            referrerPolicy="no-referrer"
-          />
+          {currentItem.type === 'video' ? (
+            <video
+              src={currentItem.url}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <img
+              src={currentItem.url}
+              alt={`Propaganda ${currentIndex}`}
+              className="w-full h-full object-cover"
+              referrerPolicy="no-referrer"
+            />
+          )}
         </motion.div>
       </AnimatePresence>
       
-      {/* Cinematic Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-brand-navy/60 via-transparent to-brand-navy/80"></div>
+      {/* Dynamic Overlay */}
+      {currentItem.overlay === 'whitish' ? (
+        <div className="absolute inset-0 bg-white/40 backdrop-blur-[2px] z-[5]"></div>
+      ) : (
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-navy/40 via-transparent to-brand-navy/60 z-[5]"></div>
+      )}
+
+      {/* Hero Text Content */}
+      <AnimatePresence>
+        {currentItem.showText && (
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -30 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="absolute inset-0 flex items-center justify-center z-10 px-4"
+          >
+            <div className="max-w-4xl text-center">
+              <h1 className="text-5xl md:text-7xl font-black text-brand-navy leading-tight drop-shadow-sm">
+                Mudanças com <span className="text-brand-red underline decoration-brand-red/30">Segurança</span> e <span className="text-brand-red underline decoration-brand-red/30">Agilidade</span>
+              </h1>
+              <p className="mt-8 text-xl md:text-2xl text-brand-navy/90 font-bold max-w-2xl mx-auto leading-relaxed">
+                Transportamos seus sonhos com o cuidado que eles merecem. Atendimento em Anápolis e todo o Brasil.
+              </p>
+              <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6">
+                <a 
+                  href={WHATSAPP_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto bg-brand-red text-white px-10 py-5 rounded-2xl text-lg font-black hover:bg-brand-dark-red transition-all shadow-2xl flex items-center justify-center gap-3 group"
+                >
+                  <MessageCircle className="w-6 h-6 fill-current" />
+                  Solicitar Orçamento
+                  <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </a>
+                <a 
+                  href="#services"
+                  className="w-full sm:w-auto bg-brand-navy text-white px-10 py-5 rounded-2xl text-lg font-black hover:bg-brand-navy/90 transition-all shadow-xl"
+                >
+                  Nossos Serviços
+                </a>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       
       {/* Navigation Dots */}
       <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex space-x-3">
-        {HERO_IMAGES.map((_, idx) => (
+        {HERO_ITEMS.map((_, idx) => (
           <button
             key={idx}
             onClick={() => setCurrentIndex(idx)}
@@ -103,7 +187,7 @@ export default function App() {
       try {
         const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
         const response = await ai.models.generateContent({
-          model: "gemini-3-flash-preview",
+          model: "gemini-2.5-flash",
           contents: "Encontre as 10 melhores avaliações de clientes para 'Anápolis Fretes' em Anápolis, Brasil. Para cada avaliação, forneça o nome do avaliador, a classificação (de 5) e o texto da avaliação em português. Retorne os dados como um array JSON de objetos com as chaves: name, rating, text.",
           config: {
             tools: [{ googleMaps: {} }],
@@ -334,44 +418,9 @@ export default function App() {
       </header>
 
       <main>
-        {/* Hero Section - Full Screen Image Slider */}
+        {/* Hero Section - Full Screen Slider */}
         <section id="home" className="relative h-screen w-full overflow-hidden">
           <HeroSlider />
-          
-          <div className="absolute inset-0 flex items-center justify-center z-10">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.5 }}
-              >
-                <h1 className="text-5xl md:text-7xl font-black text-white leading-tight drop-shadow-2xl">
-                  Mudanças com <span className="text-brand-red">Segurança</span> e <span className="text-brand-red">Agilidade</span>
-                </h1>
-                <p className="mt-6 text-xl text-white/90 font-bold max-w-2xl mx-auto drop-shadow-lg">
-                  Transportamos seus sonhos com o cuidado que eles merecem. Atendimento em Anápolis e todo o Brasil.
-                </p>
-                <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-6">
-                  <a 
-                    href={WHATSAPP_LINK}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full sm:w-auto bg-brand-red text-white px-10 py-5 rounded-2xl text-lg font-black hover:bg-brand-dark-red transition-all shadow-2xl flex items-center justify-center gap-3 group"
-                  >
-                    <MessageCircle className="w-6 h-6 fill-current" />
-                    Solicitar Orçamento
-                    <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  </a>
-                  <a 
-                    href="#services"
-                    className="w-full sm:w-auto bg-white/10 backdrop-blur-md text-white border border-white/20 px-10 py-5 rounded-2xl text-lg font-black hover:bg-white/20 transition-all"
-                  >
-                    Nossos Serviços
-                  </a>
-                </div>
-              </motion.div>
-            </div>
-          </div>
           
           {/* Subtle bottom fade to transition to content */}
           <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-brand-light to-transparent z-10"></div>
@@ -775,15 +824,20 @@ export default function App() {
         href={WHATSAPP_LINK}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-20 h-20 bg-[#25D366] text-white rounded-full shadow-[0_0_40px_rgba(37,211,102,0.6)] hover:scale-110 transition-transform duration-300 group"
+        className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-16 h-16 bg-[#25D366] text-white rounded-full shadow-[0_10px_25px_rgba(37,211,102,0.4)] hover:scale-110 transition-transform duration-300 group"
         aria-label="Falar no WhatsApp"
       >
-        <span className="absolute -top-14 right-0 bg-white text-brand-navy text-sm font-black px-4 py-3 rounded-2xl shadow-2xl opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0 whitespace-nowrap pointer-events-none border border-brand-navy/5">
-          Fale Conosco agora! 🚀
+        <span className="absolute -top-14 right-0 bg-white text-brand-navy text-sm font-black px-4 py-2 rounded-xl shadow-xl opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0 whitespace-nowrap pointer-events-none border border-brand-navy/5">
+          Como posso ajudar? 👋
         </span>
+        
+        {/* Notification Badge */}
+        <div className="absolute -top-1 -right-1 w-6 h-6 bg-red-500 text-white text-[10px] font-black rounded-full flex items-center justify-center border-2 border-white animate-bounce">
+          1
+        </div>
+
         <div className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-20"></div>
-        <div className="absolute inset-0 rounded-full bg-[#25D366] animate-pulse opacity-40"></div>
-        <MessageCircle className="w-10 h-10 fill-current relative z-10" />
+        <MessageCircle className="w-8 h-8 fill-current relative z-10" />
       </a>
     </div>
   );

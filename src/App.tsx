@@ -14,16 +14,11 @@ import {
   Package, 
   Wrench, 
   Globe, 
-  Facebook, 
-  Instagram, 
-  Youtube, 
-  MessageCircle,
   Menu,
   X,
   ChevronRight,
   ChevronLeft,
   Star,
-  Music2,
   Quote
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -37,6 +32,14 @@ const SOCIAL_LINKS = {
   instagram: "https://www.instagram.com/emersonlimamudança",
   youtube: "https://www.youtube.com/@Emersonlimamudança",
   tiktok: "https://www.tiktok.com/@emersonlima98?is_from_webapp=1&sender_device=pc"
+};
+
+const ICON_URLS = {
+  whatsapp: "https://cdn-icons-png.flaticon.com/512/3670/3670051.png",
+  facebook: "https://cdn-icons-png.flaticon.com/512/2335/2335286.png",
+  instagram: "https://cdn-icons-png.flaticon.com/512/1409/1409946.png",
+  tiktok: "https://cdn-icons-png.flaticon.com/512/3046/3046121.png",
+  youtube: "https://cdn-icons-png.flaticon.com/512/1383/1383260.png"
 };
 
 const HERO_ITEMS = [
@@ -133,10 +136,10 @@ function HeroSlider() {
             className="absolute inset-0 flex items-center justify-center z-10 px-4"
           >
             <div className="max-w-4xl text-center">
-              <h1 className="text-5xl md:text-7xl font-black text-brand-navy leading-tight drop-shadow-sm">
+              <h1 className="text-5xl md:text-7xl font-black text-brand-navy leading-tight drop-shadow-sm font-bebas tracking-wider">
                 Mudanças com <span className="text-brand-red underline decoration-brand-red/30">Segurança</span> e <span className="text-brand-red underline decoration-brand-red/30">Agilidade</span>
               </h1>
-              <p className="mt-8 text-xl md:text-2xl text-brand-navy/90 font-bold max-w-2xl mx-auto leading-relaxed">
+              <p className="mt-8 text-xl md:text-2xl text-brand-navy/90 font-bold max-w-2xl mx-auto leading-relaxed font-quicksand">
                 Transportamos seus sonhos com o cuidado que eles merecem. Atendimento em Anápolis e todo o Brasil.
               </p>
               <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6">
@@ -146,7 +149,7 @@ function HeroSlider() {
                   rel="noopener noreferrer"
                   className="w-full sm:w-auto bg-brand-red text-white px-10 py-5 rounded-2xl text-lg font-black hover:bg-brand-dark-red transition-all shadow-2xl flex items-center justify-center gap-3 group"
                 >
-                  <MessageCircle className="w-6 h-6 fill-current" />
+                  <img src={ICON_URLS.whatsapp} alt="WhatsApp" className="w-6 h-6 brightness-0 invert" referrerPolicy="no-referrer" />
                   Solicitar Orçamento
                   <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </a>
@@ -320,7 +323,7 @@ export default function App() {
           transition={{ duration: 2, repeat: Infinity }}
           className="absolute inset-0 bg-white/20 rounded-full"
         />
-        <MessageCircle className="w-6 h-6 relative z-10" />
+        <img src={ICON_URLS.whatsapp} alt="WhatsApp" className="w-6 h-6 relative z-10 brightness-0 invert" referrerPolicy="no-referrer" />
         <span className="max-w-0 overflow-hidden group-hover:max-w-xs group-hover:ml-2 transition-all duration-300 whitespace-nowrap font-bold relative z-10">
           Fale Conosco
         </span>
@@ -358,10 +361,10 @@ export default function App() {
             {/* Socials & CTA */}
             <div className="hidden md:flex items-center space-x-4">
               <div className="flex space-x-2 mr-4">
-                <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer" className="p-2 text-brand-navy/40 hover:text-brand-blue transition-colors"><Facebook className="w-5 h-5" /></a>
-                <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" className="p-2 text-brand-navy/40 hover:text-brand-red transition-colors"><Instagram className="w-5 h-5" /></a>
-                <a href={SOCIAL_LINKS.tiktok} target="_blank" rel="noopener noreferrer" className="p-2 text-brand-navy/40 hover:text-black transition-colors"><Music2 className="w-5 h-5" /></a>
-                <a href={SOCIAL_LINKS.youtube} target="_blank" rel="noopener noreferrer" className="p-2 text-brand-navy/40 hover:text-brand-red transition-colors"><Youtube className="w-5 h-5" /></a>
+                <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer" className="p-2 opacity-40 hover:opacity-100 transition-opacity"><img src={ICON_URLS.facebook} alt="Facebook" className="w-5 h-5" referrerPolicy="no-referrer" /></a>
+                <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" className="p-2 opacity-40 hover:opacity-100 transition-opacity"><img src={ICON_URLS.instagram} alt="Instagram" className="w-5 h-5" referrerPolicy="no-referrer" /></a>
+                <a href={SOCIAL_LINKS.tiktok} target="_blank" rel="noopener noreferrer" className="p-2 opacity-40 hover:opacity-100 transition-opacity"><img src={ICON_URLS.tiktok} alt="TikTok" className="w-5 h-5" referrerPolicy="no-referrer" /></a>
+                <a href={SOCIAL_LINKS.youtube} target="_blank" rel="noopener noreferrer" className="p-2 opacity-40 hover:opacity-100 transition-opacity"><img src={ICON_URLS.youtube} alt="YouTube" className="w-5 h-5" referrerPolicy="no-referrer" /></a>
               </div>
               <a 
                 href={WHATSAPP_LINK}
@@ -406,10 +409,10 @@ export default function App() {
                   </a>
                 ))}
                 <div className="pt-4 flex justify-around border-t border-brand-navy/5">
-                  <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer" className="p-2 text-brand-navy/40"><Facebook className="w-6 h-6" /></a>
-                  <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" className="p-2 text-brand-navy/40"><Instagram className="w-6 h-6" /></a>
-                  <a href={SOCIAL_LINKS.tiktok} target="_blank" rel="noopener noreferrer" className="p-2 text-brand-navy/40"><Music2 className="w-6 h-6" /></a>
-                  <a href={SOCIAL_LINKS.youtube} target="_blank" rel="noopener noreferrer" className="p-2 text-brand-navy/40"><Youtube className="w-6 h-6" /></a>
+                  <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer" className="p-2 opacity-40"><img src={ICON_URLS.facebook} alt="Facebook" className="w-6 h-6" referrerPolicy="no-referrer" /></a>
+                  <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" className="p-2 opacity-40"><img src={ICON_URLS.instagram} alt="Instagram" className="w-6 h-6" referrerPolicy="no-referrer" /></a>
+                  <a href={SOCIAL_LINKS.tiktok} target="_blank" rel="noopener noreferrer" className="p-2 opacity-40"><img src={ICON_URLS.tiktok} alt="TikTok" className="w-6 h-6" referrerPolicy="no-referrer" /></a>
+                  <a href={SOCIAL_LINKS.youtube} target="_blank" rel="noopener noreferrer" className="p-2 opacity-40"><img src={ICON_URLS.youtube} alt="YouTube" className="w-6 h-6" referrerPolicy="no-referrer" /></a>
                 </div>
               </div>
             </motion.div>
@@ -443,11 +446,11 @@ export default function App() {
                 </div>
               </div>
               <div className="mt-12 lg:mt-0">
-                <h2 className="text-brand-red font-black tracking-widest uppercase text-xs">Sobre Nós</h2>
-                <h3 className="mt-4 text-4xl font-black text-brand-navy sm:text-5xl leading-tight">
+                <h2 className="text-brand-red font-black tracking-widest uppercase text-xs font-russo">Sobre Nós</h2>
+                <h3 className="mt-4 text-4xl font-black text-brand-navy sm:text-5xl leading-tight font-bebas tracking-wide">
                   Sua mudança em boas mãos
                 </h3>
-                <p className="mt-6 text-lg text-brand-navy/60 leading-relaxed">
+                <p className="mt-6 text-lg text-brand-navy/60 leading-relaxed font-figtree">
                   A <strong className="text-brand-navy">Emerson Lima Mudança</strong> nasceu do compromisso em oferecer um serviço de transporte humanizado e extremamente cuidadoso. Sabemos que uma mudança não é apenas o transporte de objetos, mas a transição de uma vida para um novo lar ou negócio.
                 </p>
                 <p className="mt-4 text-lg text-brand-navy/60 leading-relaxed">
@@ -482,11 +485,11 @@ export default function App() {
         <section id="services" className="py-24 bg-brand-light">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto">
-              <h2 className="text-brand-red font-black tracking-widest uppercase text-xs">Nossos Serviços</h2>
-              <h3 className="mt-4 text-4xl font-black text-brand-navy sm:text-5xl leading-tight">
+              <h2 className="text-brand-red font-black tracking-widest uppercase text-xs font-russo">Nossos Serviços</h2>
+              <h3 className="mt-4 text-4xl font-black text-brand-navy sm:text-5xl leading-tight font-bebas tracking-wide">
                 Soluções completas para seu transporte
               </h3>
-              <p className="mt-6 text-lg text-brand-navy/60">
+              <p className="mt-6 text-lg text-brand-navy/60 font-figtree">
                 Oferecemos uma gama completa de serviços para atender desde pequenos fretes até grandes mudanças interestaduais.
               </p>
             </div>
@@ -529,8 +532,8 @@ export default function App() {
         <section id="reviews" className="py-24 bg-white overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-brand-red font-black tracking-widest uppercase text-xs">Depoimentos</h2>
-              <h3 className="mt-4 text-4xl font-black text-brand-navy sm:text-5xl leading-tight">
+              <h2 className="text-brand-red font-black tracking-widest uppercase text-xs font-russo">Depoimentos</h2>
+              <h3 className="mt-4 text-4xl font-black text-brand-navy sm:text-5xl leading-tight font-bebas tracking-wide">
                 O que nossos clientes dizem
               </h3>
               <div className="mt-6 flex justify-center items-center space-x-2">
@@ -560,7 +563,7 @@ export default function App() {
                         <Star key={i} className="w-4 h-4 fill-brand-red text-brand-red" />
                       ))}
                     </div>
-                    <p className="text-brand-navy/70 italic leading-relaxed mb-6 relative z-10">
+                    <p className="text-brand-navy/70 italic leading-relaxed mb-6 relative z-10 font-caveat text-2xl">
                       "{review.text}"
                     </p>
                     <div className="flex items-center">
@@ -762,10 +765,10 @@ export default function App() {
                 Mudança segura, rápida e com todo cuidado que a sua família merece em Anápolis e região. Sua satisfação é nossa prioridade.
               </p>
               <div className="mt-10 flex space-x-4">
-                <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer" className="p-3 bg-white/5 rounded-xl hover:bg-brand-red hover:text-white transition-all duration-300"><Facebook className="w-6 h-6" /></a>
-                <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" className="p-3 bg-white/5 rounded-xl hover:bg-brand-red hover:text-white transition-all duration-300"><Instagram className="w-6 h-6" /></a>
-                <a href={SOCIAL_LINKS.tiktok} target="_blank" rel="noopener noreferrer" className="p-3 bg-white/5 rounded-xl hover:bg-brand-red hover:text-white transition-all duration-300"><Music2 className="w-6 h-6" /></a>
-                <a href={SOCIAL_LINKS.youtube} target="_blank" rel="noopener noreferrer" className="p-3 bg-white/5 rounded-xl hover:bg-brand-red hover:text-white transition-all duration-300"><Youtube className="w-6 h-6" /></a>
+                <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer" className="p-3 bg-white/5 rounded-xl hover:bg-brand-red transition-all duration-300"><img src={ICON_URLS.facebook} alt="Facebook" className="w-6 h-6 brightness-0 invert" referrerPolicy="no-referrer" /></a>
+                <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" className="p-3 bg-white/5 rounded-xl hover:bg-brand-red transition-all duration-300"><img src={ICON_URLS.instagram} alt="Instagram" className="w-6 h-6 brightness-0 invert" referrerPolicy="no-referrer" /></a>
+                <a href={SOCIAL_LINKS.tiktok} target="_blank" rel="noopener noreferrer" className="p-3 bg-white/5 rounded-xl hover:bg-brand-red transition-all duration-300"><img src={ICON_URLS.tiktok} alt="TikTok" className="w-6 h-6 brightness-0 invert" referrerPolicy="no-referrer" /></a>
+                <a href={SOCIAL_LINKS.youtube} target="_blank" rel="noopener noreferrer" className="p-3 bg-white/5 rounded-xl hover:bg-brand-red transition-all duration-300"><img src={ICON_URLS.youtube} alt="YouTube" className="w-6 h-6 brightness-0 invert" referrerPolicy="no-referrer" /></a>
               </div>
             </div>
 
@@ -837,7 +840,7 @@ export default function App() {
         </div>
 
         <div className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-20"></div>
-        <MessageCircle className="w-8 h-8 fill-current relative z-10" />
+        <img src={ICON_URLS.whatsapp} alt="WhatsApp" className="w-8 h-8 relative z-10" referrerPolicy="no-referrer" />
       </a>
     </div>
   );

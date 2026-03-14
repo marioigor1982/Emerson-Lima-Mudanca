@@ -6,4 +6,16 @@
   --color-brand-navy: #020E26;
   --color-brand-blue: #064073;
   --color-brand-light: #F2F2F2;
+
+  --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
+  --font-agbalumo: "Agbalumo", system-ui;
+  --font-bebas: "Bebas Neue", sans-serif;
+  --font-caveat: "Caveat", cursive;
+  --font-dancing: "Dancing Script", cursive;
+  --font-figtree: "Figtree", sans-serif;
+  --font-libertinus: "Libertinus Keyboard", serif;
+  --font-quicksand: "Quicksand", sans-serif;
+  --font-russo: "Russo One", sans-serif;
+  --font-satisfy: "Satisfy", cursive;
+  --font-story: "Story Script", cursive;
 }

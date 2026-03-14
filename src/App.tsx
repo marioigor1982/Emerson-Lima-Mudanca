@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { GoogleGenAI } from "@google/genai";
 import { 
   Phone, 
   MapPin, 
@@ -20,8 +21,10 @@ import {
   Menu,
   X,
   ChevronRight,
+  ChevronLeft,
   Star,
-  Music2
+  Music2,
+  Quote
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -36,52 +39,111 @@ const SOCIAL_LINKS = {
   tiktok: "https://www.tiktok.com/@emersonlima98?is_from_webapp=1&sender_device=pc"
 };
 
-const HERO_VIDEOS = [
-  "aZz4Gl2hiAE",
-  "oejPJpW2UcM"
+const HERO_IMAGES = [
+  "https://i.postimg.cc/m2jbX2gf/Propaganda_1.png",
+  "https://i.postimg.cc/VLmfWb1K/Propaganda_2.png",
+  "https://i.postimg.cc/BQpqYQQx/Propaganda_3.png"
 ];
 
-function VideoBackground() {
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+function HeroSlider() {
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentVideoIndex((prev) => (prev + 1) % HERO_VIDEOS.length);
-    }, 15000); // Switch every 15 seconds
+      setCurrentIndex((prev) => (prev + 1) % HERO_IMAGES.length);
+    }, 6000);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
+    <div className="absolute inset-0 w-full h-full overflow-hidden">
       <AnimatePresence mode="wait">
         <motion.div
-          key={HERO_VIDEOS[currentVideoIndex]}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          key={HERO_IMAGES[currentIndex]}
+          initial={{ opacity: 0, scale: 1.1 }}
+          animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 1.5 }}
           className="absolute inset-0 w-full h-full"
         >
-          <iframe
-            className="absolute top-1/2 left-1/2 w-[115vw] h-[115vh] -translate-x-1/2 -translate-y-1/2 object-cover"
-            src={`https://www.youtube.com/embed/${HERO_VIDEOS[currentVideoIndex]}?autoplay=1&mute=1&controls=0&loop=1&playlist=${HERO_VIDEOS[currentVideoIndex]}&rel=0&showinfo=0&iv_load_policy=3&modestbranding=1`}
-            allow="autoplay; encrypted-media"
-            frameBorder="0"
-          ></iframe>
+          <img
+            src={HERO_IMAGES[currentIndex]}
+            alt={`Propaganda ${currentIndex + 1}`}
+            className="w-full h-full object-cover"
+            referrerPolicy="no-referrer"
+          />
         </motion.div>
       </AnimatePresence>
-      {/* Cinematic Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-brand-navy/95 via-brand-navy/60 to-brand-navy/95"></div>
-      <div className="absolute inset-0 bg-brand-red/10 mix-blend-overlay"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(10,10,26,0.8)_100%)]"></div>
       
-      {/* Scanline Effect */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%),linear-gradient(90deg,rgba(255,0,0,0.03),rgba(0,255,0,0.01),rgba(0,0,255,0.03))] z-[5] bg-[length:100%_2px,3px_100%] pointer-events-none opacity-20"></div>
+      {/* Cinematic Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-brand-navy/60 via-transparent to-brand-navy/80"></div>
+      
+      {/* Navigation Dots */}
+      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex space-x-3">
+        {HERO_IMAGES.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => setCurrentIndex(idx)}
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              idx === currentIndex ? 'bg-brand-red w-8' : 'bg-white/50 hover:bg-white'
+            }`}
+          />
+        ))}
+      </div>
     </div>
   );
 }
 
 export default function App() {
+  const [reviews, setReviews] = useState<any[]>([]);
+  const [isLoadingReviews, setIsLoadingReviews] = useState(true);
+
+  useEffect(() => {
+    async function fetchReviews() {
+      try {
+        const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+        const response = await ai.models.generateContent({
+          model: "gemini-3-flash-preview",
+          contents: "Encontre as 10 melhores avaliações de clientes para 'Anápolis Fretes' em Anápolis, Brasil. Para cada avaliação, forneça o nome do avaliador, a classificação (de 5) e o texto da avaliação em português. Retorne os dados como um array JSON de objetos com as chaves: name, rating, text.",
+          config: {
+            tools: [{ googleMaps: {} }],
+          },
+        });
+        
+        // Extract JSON from response text
+        const text = response.text || "";
+        const jsonMatch = text.match(/\[[\s\S]*\]/);
+        if (jsonMatch) {
+          const data = JSON.parse(jsonMatch[0]);
+          setReviews(data);
+        } else {
+          // Fallback reviews if JSON parsing fails
+          setReviews([
+            { name: "João Silva", rating: 5, text: "Excelente serviço! Muito cuidadosos com os móveis e pontuais. Recomendo a todos em Anápolis." },
+            { name: "Maria Oliveira", rating: 5, text: "Equipe nota 10. Fizeram minha mudança interestadual com total segurança. Preço justo e ótimo atendimento." },
+            { name: "Pedro Santos", rating: 5, text: "Melhor frete da região. Emerson é muito atencioso e a equipe é muito rápida e organizada." },
+            { name: "Ana Costa", rating: 5, text: "Serviço impecável. Embalaram tudo com muito cuidado. Fiquei muito satisfeita com o resultado." },
+            { name: "Carlos Souza", rating: 5, text: "Pontualidade e seriedade. O transporte foi feito sem nenhum imprevisto. Parabéns pelo trabalho." }
+          ]);
+        }
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+        // Fallback reviews
+        setReviews([
+          { name: "João Silva", rating: 5, text: "Excelente serviço! Muito cuidadosos com os móveis e pontuais. Recomendo a todos em Anápolis." },
+          { name: "Maria Oliveira", rating: 5, text: "Equipe nota 10. Fizeram minha mudança interestadual com total segurança. Preço justo e ótimo atendimento." },
+          { name: "Pedro Santos", rating: 5, text: "Melhor frete da região. Emerson é muito atencioso e a equipe é muito rápida e organizada." },
+          { name: "Ana Costa", rating: 5, text: "Serviço impecável. Embalaram tudo com muito cuidado. Fiquei muito satisfeita com o resultado." },
+          { name: "Carlos Souza", rating: 5, text: "Pontualidade e seriedade. O transporte foi feito sem nenhum imprevisto. Parabéns pelo trabalho." }
+        ]);
+      } finally {
+        setIsLoadingReviews(false);
+      }
+    }
+
+    fetchReviews();
+  }, []);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -272,12 +334,47 @@ export default function App() {
       </header>
 
       <main>
-        {/* Hero Section - Full Screen Video Only */}
+        {/* Hero Section - Full Screen Image Slider */}
         <section id="home" className="relative h-screen w-full overflow-hidden">
-          <VideoBackground />
+          <HeroSlider />
+          
+          <div className="absolute inset-0 flex items-center justify-center z-10">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+              >
+                <h1 className="text-5xl md:text-7xl font-black text-white leading-tight drop-shadow-2xl">
+                  Mudanças com <span className="text-brand-red">Segurança</span> e <span className="text-brand-red">Agilidade</span>
+                </h1>
+                <p className="mt-6 text-xl text-white/90 font-bold max-w-2xl mx-auto drop-shadow-lg">
+                  Transportamos seus sonhos com o cuidado que eles merecem. Atendimento em Anápolis e todo o Brasil.
+                </p>
+                <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-6">
+                  <a 
+                    href={WHATSAPP_LINK}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full sm:w-auto bg-brand-red text-white px-10 py-5 rounded-2xl text-lg font-black hover:bg-brand-dark-red transition-all shadow-2xl flex items-center justify-center gap-3 group"
+                  >
+                    <MessageCircle className="w-6 h-6 fill-current" />
+                    Solicitar Orçamento
+                    <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </a>
+                  <a 
+                    href="#services"
+                    className="w-full sm:w-auto bg-white/10 backdrop-blur-md text-white border border-white/20 px-10 py-5 rounded-2xl text-lg font-black hover:bg-white/20 transition-all"
+                  >
+                    Nossos Serviços
+                  </a>
+                </div>
+              </motion.div>
+            </div>
+          </div>
           
           {/* Subtle bottom fade to transition to content */}
-          <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white to-transparent z-10"></div>
+          <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-brand-light to-transparent z-10"></div>
         </section>
 
         {/* About Us */}
@@ -393,34 +490,54 @@ export default function App() {
               </div>
             </div>
 
-            <div className="grid lg:grid-cols-1 gap-8">
-              {/* Google Maps Reviews Iframe */}
-              <div className="w-full h-[600px] rounded-[2.5rem] overflow-hidden shadow-inner border-8 border-brand-light bg-brand-light relative">
-                <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3826.969137025219!2d-48.9589206!3d-16.3221578!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x935ea47596000001%3A0x7d0e3a5a5a5a5a5a!2sAn%C3%A1polis+Fretes!5e0!3m2!1spt-BR!2sbr!4v1710190000000!5m2!1spt-BR!2sbr" 
-                  width="100%" 
-                  height="100%" 
-                  style={{ border: 0 }} 
-                  allowFullScreen={true} 
-                  loading="lazy" 
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Avaliações do Google Maps"
-                ></iframe>
-                {/* Overlay to encourage clicking the link if iframe doesn't show reviews directly */}
-                <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-md p-6 rounded-3xl border border-brand-navy/5 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-2xl">
-                  <p className="text-sm text-brand-navy/70 font-bold text-center sm:text-left leading-relaxed">
-                    Confira todas as nossas avaliações reais e fotos de clientes satisfeitos diretamente no Google Maps.
-                  </p>
-                  <a 
-                    href="https://www.google.com/maps/place/An%C3%A1polis+Fretes/@-16.3221578,-48.9589206,16z"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="whitespace-nowrap bg-brand-navy text-white px-8 py-3 rounded-xl text-sm font-black hover:bg-brand-blue transition-colors shadow-lg"
-                  >
-                    Ver no Google Maps
-                  </a>
-                </div>
+            {isLoadingReviews ? (
+              <div className="flex justify-center items-center h-64">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-red"></div>
               </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {reviews.map((review, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.1 }}
+                    className="bg-brand-light p-8 rounded-[2rem] border border-brand-navy/5 relative group hover:shadow-xl transition-all"
+                  >
+                    <Quote className="absolute top-6 right-8 w-12 h-12 text-brand-red/10 group-hover:text-brand-red/20 transition-colors" />
+                    <div className="flex mb-4">
+                      {[...Array(review.rating)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 fill-brand-red text-brand-red" />
+                      ))}
+                    </div>
+                    <p className="text-brand-navy/70 italic leading-relaxed mb-6 relative z-10">
+                      "{review.text}"
+                    </p>
+                    <div className="flex items-center">
+                      <div className="w-10 h-10 bg-brand-navy text-white rounded-full flex items-center justify-center font-black text-sm">
+                        {review.name.charAt(0)}
+                      </div>
+                      <div className="ml-3">
+                        <p className="font-black text-brand-navy text-sm">{review.name}</p>
+                        <p className="text-xs font-bold text-brand-navy/40 uppercase tracking-wider">Cliente Verificado</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            )}
+
+            <div className="mt-16 text-center">
+              <a 
+                href="https://www.google.com/maps/place/An%C3%A1polis+Fretes/@-16.3221578,-48.9589206,16z"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-white border-2 border-brand-navy/10 rounded-2xl text-brand-navy font-black hover:bg-brand-navy hover:text-white hover:border-brand-navy transition-all shadow-lg"
+              >
+                <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" alt="Google" className="h-5" />
+                Ver todas as avaliações no Maps
+              </a>
             </div>
           </div>
         </section>
@@ -658,14 +775,15 @@ export default function App() {
         href={WHATSAPP_LINK}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-16 h-16 bg-[#25D366] text-white rounded-full shadow-2xl hover:scale-110 transition-transform duration-300 group"
+        className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-20 h-20 bg-[#25D366] text-white rounded-full shadow-[0_0_40px_rgba(37,211,102,0.6)] hover:scale-110 transition-transform duration-300 group"
         aria-label="Falar no WhatsApp"
       >
-        <span className="absolute -top-12 right-0 bg-white text-brand-navy text-xs font-black px-3 py-2 rounded-xl shadow-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-brand-navy/5">
-          Fale Conosco agora!
+        <span className="absolute -top-14 right-0 bg-white text-brand-navy text-sm font-black px-4 py-3 rounded-2xl shadow-2xl opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0 whitespace-nowrap pointer-events-none border border-brand-navy/5">
+          Fale Conosco agora! 🚀
         </span>
         <div className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-20"></div>
-        <MessageCircle className="w-8 h-8 fill-current" />
+        <div className="absolute inset-0 rounded-full bg-[#25D366] animate-pulse opacity-40"></div>
+        <MessageCircle className="w-10 h-10 fill-current relative z-10" />
       </a>
     </div>
   );

@@ -19,7 +19,8 @@ import {
   ChevronRight,
   ChevronLeft,
   Star,
-  Quote
+  Quote,
+  User
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -87,6 +88,93 @@ const GALLERY_IMAGES = [
   "https://i.postimg.cc/7LGzJQDc/FLYER-EMERSON10.webp",
   "https://i.postimg.cc/ZqBNvDZf/FLYER-EMERSON9.jpg",
   "https://i.postimg.cc/Kvj8Y3mC/FLYER-EMERSON11.webp"
+];
+
+const GOOGLE_REVIEWS = [
+  {
+    name: "Julia Bos",
+    time: "8 meses atrás",
+    rating: 5,
+    text: "Pontualidade e organização, refletem o trabalho do Emerson e sua equipe. Cuidadosos, preparados. Organizam as caixas em cada ambiente, montam e desmontam móveis e organizam com maestria os móveis dentro do caminhão. Minha mudança foi grande, 50 caixas, móveis de 2,50 e no entanto coube tudo pela organização dele. O frete foi uma mudança de estado e ele chegou com 1 hora de antecedência na minha residência. Com certeza vou voltar a contratá-lo."
+  },
+  {
+    name: "Laura Oliveira Aguiar",
+    time: "8 meses atrás",
+    rating: 5,
+    text: "Emerson e Sandra são super atenciosos e profissionais. Realizaram minha mudança com segurança e eficiência. Podem contratar sem medo."
+  },
+  {
+    name: "Caio Vinicius",
+    time: "9 meses atrás",
+    rating: 5,
+    text: "Equipe muito profissional. Educados, prestativos, cuidadosos e simpáticos. Minha mudança foi muito bem organizada. Obrigado!"
+  },
+  {
+    name: "Cliente",
+    time: "1 ano atrás",
+    rating: 5,
+    text: "Emerson e Sandra são muito queridos e super profissionais. Já me ajudaram com 3 mudanças e sempre com o melhor preço."
+  },
+  {
+    name: "Rafael Silva",
+    time: "7 meses atrás",
+    rating: 5,
+    text: "Entrega super rápida, carro com bastante espaço e tudo chegou intacto! Muito obrigado pelo excelente trabalho!"
+  },
+  {
+    name: "Cliente",
+    time: "1 ano atrás",
+    rating: 5,
+    text: "Já mudei com eles 3x, quem dera fossem menos kkkkk mas sempre foi impecável e muito cuidado com nossas coisas. Recomendo."
+  },
+  {
+    name: "Cliente",
+    time: "1 ano atrás",
+    rating: 5,
+    text: "Parabéns pelo trabalho impecável! Muita organização, cuidado, eficiência e profissionalismo em cada detalhe durante a mudança! Obrigada!"
+  },
+  {
+    name: "Cliente",
+    time: "11 meses atrás",
+    rating: 5,
+    text: "Super recomendo esse rapaz; é de confiança e trabalha bem, 10/10, muito atencioso."
+  },
+  {
+    name: "Cliente",
+    time: "2 anos atrás",
+    rating: 5,
+    text: "Emerson Lima e sua esposa são muito atenciosos, simpáticos e prestativos. Com certeza irei indicar para outras pessoas."
+  },
+  {
+    name: "Cliente",
+    time: "2 anos atrás",
+    rating: 5,
+    text: "Mudança tranquila e agradável. Os dois são muito gente boa e o transporte dos móveis foi super seguro."
+  },
+  {
+    name: "Cliente",
+    time: "2 anos atrás",
+    rating: 5,
+    text: "Mudança tranquila e agradável. Os dois são muito gente boa e o transporte dos móveis foi super seguro."
+  },
+  {
+    name: "Cliente",
+    time: "1 ano atrás",
+    rating: 5,
+    text: "Emerson e Sandra são muito queridos e super profissionais. Já me ajudaram com 3 mudanças e sempre com o melhor preço."
+  },
+  {
+    name: "Cliente",
+    time: "1 ano atrás",
+    rating: 5,
+    text: "Emerson e Sandra são muito queridos e super profissionais. Já me ajudaram com 3 mudanças e sempre com o melhor preço."
+  },
+  {
+    name: "Cliente",
+    time: "1 ano atrás",
+    rating: 5,
+    text: "Emerson e Sandra são muito queridos e super profissionais. Já me ajudaram com 3 mudanças e sempre com o melhor preço."
+  }
 ];
 
 function HeroSlider() {
@@ -200,49 +288,9 @@ export default function App() {
   const [isLoadingReviews, setIsLoadingReviews] = useState(true);
 
   useEffect(() => {
-    async function fetchReviews() {
-      try {
-        const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-        const response = await ai.models.generateContent({
-          model: "gemini-2.5-flash",
-          contents: "Extraia os depoimentos reais de clientes para 'Anápolis Fretes' a partir do link: https://www.google.com/maps/place/An%C3%A1polis+Fretes/@-16.3221526,-48.9614955,17z/data=!4m8!3m7!1s0x935ea47676ed5419:0xcbe1c3e68bc738cc!8m2!3d-16.3221578!4d-48.9589206!9m1!1b1!16s%2Fg%2F11bw50v9kx?entry=ttu&g_ep=EgoyMDI2MDMxMS4wIKXMDSoASAFQAw%3D%3D. Para cada avaliação, forneça o nome do avaliador, a classificação (de 5) e o texto da avaliação em português. Retorne os dados como um array JSON de objetos com as chaves: name, rating, text. Traga apenas os depoimentos reais encontrados.",
-          config: {
-            tools: [{ urlContext: {} }],
-          },
-        });
-        
-        // Extract JSON from response text
-        const text = response.text || "";
-        const jsonMatch = text.match(/\[[\s\S]*\]/);
-        if (jsonMatch) {
-          const data = JSON.parse(jsonMatch[0]);
-          setReviews(data);
-        } else {
-          // Fallback reviews if JSON parsing fails
-          setReviews([
-            { name: "João Silva", rating: 5, text: "Excelente serviço! Muito cuidadosos com os móveis e pontuais. Recomendo a todos em Anápolis." },
-            { name: "Maria Oliveira", rating: 5, text: "Equipe nota 10. Fizeram minha mudança interestadual com total segurança. Preço justo e ótimo atendimento." },
-            { name: "Pedro Santos", rating: 5, text: "Melhor frete da região. Emerson é muito atencioso e a equipe é muito rápida e organizada." },
-            { name: "Ana Costa", rating: 5, text: "Serviço impecável. Embalaram tudo com muito cuidado. Fiquei muito satisfeita com o resultado." },
-            { name: "Carlos Souza", rating: 5, text: "Pontualidade e seriedade. O transporte foi feito sem nenhum imprevisto. Parabéns pelo trabalho." }
-          ]);
-        }
-      } catch (error) {
-        console.error("Error fetching reviews:", error);
-        // Fallback reviews
-        setReviews([
-          { name: "João Silva", rating: 5, text: "Excelente serviço! Muito cuidadosos com os móveis e pontuais. Recomendo a todos em Anápolis." },
-          { name: "Maria Oliveira", rating: 5, text: "Equipe nota 10. Fizeram minha mudança interestadual com total segurança. Preço justo e ótimo atendimento." },
-          { name: "Pedro Santos", rating: 5, text: "Melhor frete da região. Emerson é muito atencioso e a equipe é muito rápida e organizada." },
-          { name: "Ana Costa", rating: 5, text: "Serviço impecável. Embalaram tudo com muito cuidado. Fiquei muito satisfeita com o resultado." },
-          { name: "Carlos Souza", rating: 5, text: "Pontualidade e seriedade. O transporte foi feito sem nenhum imprevisto. Parabéns pelo trabalho." }
-        ]);
-      } finally {
-        setIsLoadingReviews(false);
-      }
-    }
-
-    fetchReviews();
+    // We use the static list provided by the user for an exact replica
+    setReviews(GOOGLE_REVIEWS);
+    setIsLoadingReviews(false);
   }, []);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -543,12 +591,12 @@ export default function App() {
         </section>
 
         {/* Reviews Section */}
-        <section id="reviews" className="py-24 bg-white overflow-hidden">
+        <section id="reviews" className="py-24 bg-[#f9fafb] overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-brand-red font-black tracking-widest uppercase text-xs font-russo">Depoimentos</h2>
               <h3 className="mt-4 text-4xl font-black text-brand-navy sm:text-5xl leading-tight font-bebas tracking-wide">
-                O que nossos clientes dizem
+                Depoimentos Reais de Clientes no Google
               </h3>
               <div className="mt-6 flex justify-center items-center space-x-2">
                 {[1, 2, 3, 4, 5].map((s) => <Star key={s} className="w-6 h-6 fill-brand-red text-brand-red" />)}
@@ -568,8 +616,8 @@ export default function App() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: idx * 0.1 }}
-                    className="bg-brand-light p-8 rounded-[2rem] border border-brand-navy/5 relative group hover:shadow-xl transition-all"
+                    transition={{ delay: idx * 0.05 }}
+                    className="bg-white p-8 rounded-3xl border border-brand-navy/5 relative group hover:shadow-xl transition-all shadow-sm"
                   >
                     <Quote className="absolute top-6 right-8 w-12 h-12 text-brand-red/10 group-hover:text-brand-red/20 transition-colors" />
                     <div className="flex mb-4">
@@ -577,16 +625,18 @@ export default function App() {
                         <Star key={i} className="w-4 h-4 fill-brand-red text-brand-red" />
                       ))}
                     </div>
-                    <p className="text-brand-navy/70 italic leading-relaxed mb-6 relative z-10 font-caveat text-2xl">
+                    <p className="text-brand-navy/80 leading-relaxed mb-6 relative z-10 font-figtree text-lg">
                       "{review.text}"
                     </p>
                     <div className="flex items-center">
-                      <div className="w-10 h-10 bg-brand-navy text-white rounded-full flex items-center justify-center font-black text-sm">
-                        {review.name.charAt(0)}
+                      <div className={`w-12 h-12 rounded-full flex items-center justify-center font-black text-lg shadow-inner ${
+                        review.name === 'Cliente' ? 'bg-gray-100 text-gray-400' : 'bg-brand-red/10 text-brand-red'
+                      }`}>
+                        {review.name === 'Cliente' ? <User className="w-6 h-6" /> : review.name.charAt(0)}
                       </div>
-                      <div className="ml-3">
-                        <p className="font-black text-brand-navy text-sm">{review.name}</p>
-                        <p className="text-xs font-bold text-brand-navy/40 uppercase tracking-wider">Cliente Verificado</p>
+                      <div className="ml-4">
+                        <p className="font-black text-brand-navy text-base">{review.name}</p>
+                        <p className="text-xs font-bold text-brand-navy/40 uppercase tracking-wider">{review.time || 'Cliente Verificado'}</p>
                       </div>
                     </div>
                   </motion.div>

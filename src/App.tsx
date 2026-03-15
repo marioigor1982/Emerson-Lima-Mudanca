@@ -37,7 +37,10 @@ const SOCIAL_LINKS = {
 const ICON_URLS = {
   whatsapp: "https://cdn-icons-png.flaticon.com/512/3670/3670051.png",
   facebook: "https://cdn-icons-png.flaticon.com/512/2335/2335286.png",
-  instagram: "https://cdn-icons-png.flaticon.com/512/1409/1409946.png",
+  instagram: "https://cdn-icons-png.flaticon.com/512/2111/2111421.png", // Header Instagram
+  instagramFooter: "https://cdn-icons-png.flaticon.com/512/1384/1384089.png",
+  facebookFooter: "https://cdn-icons-png.flaticon.com/512/2168/2168281.png",
+  youtubeFooter: "https://cdn-icons-png.flaticon.com/512/1384/1384012.png",
   tiktok: "https://cdn-icons-png.flaticon.com/512/3046/3046121.png",
   youtube: "https://cdn-icons-png.flaticon.com/512/1383/1383260.png"
 };
@@ -73,6 +76,17 @@ const HERO_ITEMS = [
     showText: false,
     overlay: 'none'
   }
+];
+
+const GALLERY_IMAGES = [
+  "https://i.postimg.cc/Vs7hzdGf/FLYER-EMERSON2.png",
+  "https://i.postimg.cc/PqhyWjVG/FLYER-EMERSON3.webp",
+  "https://i.postimg.cc/m2HyKDK3/FLYER-EMERSON4.webp",
+  "https://i.postimg.cc/8c8mCg6n/FLYER-EMERSON6.webp",
+  "https://i.postimg.cc/jS8677f0/FLYER-EMERSON7.webp",
+  "https://i.postimg.cc/7LGzJQDc/FLYER-EMERSON10.webp",
+  "https://i.postimg.cc/ZqBNvDZf/FLYER-EMERSON9.jpg",
+  "https://i.postimg.cc/Kvj8Y3mC/FLYER-EMERSON11.webp"
 ];
 
 function HeroSlider() {
@@ -191,9 +205,9 @@ export default function App() {
         const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
         const response = await ai.models.generateContent({
           model: "gemini-2.5-flash",
-          contents: "Encontre as 10 melhores avaliações de clientes para 'Anápolis Fretes' em Anápolis, Brasil. Para cada avaliação, forneça o nome do avaliador, a classificação (de 5) e o texto da avaliação em português. Retorne os dados como um array JSON de objetos com as chaves: name, rating, text.",
+          contents: "Extraia os depoimentos reais de clientes para 'Anápolis Fretes' a partir do link: https://www.google.com/maps/place/An%C3%A1polis+Fretes/@-16.3221526,-48.9614955,17z/data=!4m8!3m7!1s0x935ea47676ed5419:0xcbe1c3e68bc738cc!8m2!3d-16.3221578!4d-48.9589206!9m1!1b1!16s%2Fg%2F11bw50v9kx?entry=ttu&g_ep=EgoyMDI2MDMxMS4wIKXMDSoASAFQAw%3D%3D. Para cada avaliação, forneça o nome do avaliador, a classificação (de 5) e o texto da avaliação em português. Retorne os dados como um array JSON de objetos com as chaves: name, rating, text. Traga apenas os depoimentos reais encontrados.",
           config: {
-            tools: [{ googleMaps: {} }],
+            tools: [{ urlContext: {} }],
           },
         });
         
@@ -315,16 +329,16 @@ export default function App() {
         animate={{ scale: 1 }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        className="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl flex items-center justify-center group overflow-hidden"
+        className="fixed bottom-6 right-6 z-50 p-2 flex items-center justify-center group"
         aria-label="Chamar no WhatsApp"
       >
         <motion.div
           animate={{ scale: [1, 1.2, 1] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="absolute inset-0 bg-white/20 rounded-full"
+          className="absolute inset-0 bg-brand-red/10 rounded-full"
         />
-        <img src={ICON_URLS.whatsapp} alt="WhatsApp" className="w-6 h-6 relative z-10 brightness-0 invert" referrerPolicy="no-referrer" />
-        <span className="max-w-0 overflow-hidden group-hover:max-w-xs group-hover:ml-2 transition-all duration-300 whitespace-nowrap font-bold relative z-10">
+        <img src={ICON_URLS.whatsapp} alt="WhatsApp" className="w-14 h-14 relative z-10" referrerPolicy="no-referrer" />
+        <span className="absolute right-full mr-4 bg-white text-brand-navy px-4 py-2 rounded-xl shadow-xl font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
           Fale Conosco
         </span>
       </motion.a>
@@ -351,7 +365,7 @@ export default function App() {
                 <a 
                   key={link.name} 
                   href={link.href}
-                  className="text-sm font-bold text-brand-navy/70 hover:text-brand-red transition-colors"
+                  className="text-sm font-bold text-brand-navy/70 hover:text-brand-red transition-colors uppercase"
                 >
                   {link.name}
                 </a>
@@ -361,10 +375,10 @@ export default function App() {
             {/* Socials & CTA */}
             <div className="hidden md:flex items-center space-x-4">
               <div className="flex space-x-2 mr-4">
-                <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer" className="p-2 opacity-40 hover:opacity-100 transition-opacity"><img src={ICON_URLS.facebook} alt="Facebook" className="w-5 h-5" referrerPolicy="no-referrer" /></a>
-                <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" className="p-2 opacity-40 hover:opacity-100 transition-opacity"><img src={ICON_URLS.instagram} alt="Instagram" className="w-5 h-5" referrerPolicy="no-referrer" /></a>
-                <a href={SOCIAL_LINKS.tiktok} target="_blank" rel="noopener noreferrer" className="p-2 opacity-40 hover:opacity-100 transition-opacity"><img src={ICON_URLS.tiktok} alt="TikTok" className="w-5 h-5" referrerPolicy="no-referrer" /></a>
-                <a href={SOCIAL_LINKS.youtube} target="_blank" rel="noopener noreferrer" className="p-2 opacity-40 hover:opacity-100 transition-opacity"><img src={ICON_URLS.youtube} alt="YouTube" className="w-5 h-5" referrerPolicy="no-referrer" /></a>
+                <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer" className="p-2 hover:scale-110 transition-transform"><img src={ICON_URLS.facebook} alt="Facebook" className="w-5 h-5" referrerPolicy="no-referrer" /></a>
+                <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" className="p-2 hover:scale-110 transition-transform"><img src={ICON_URLS.instagram} alt="Instagram" className="w-5 h-5" referrerPolicy="no-referrer" /></a>
+                <a href={SOCIAL_LINKS.tiktok} target="_blank" rel="noopener noreferrer" className="p-2 hover:scale-110 transition-transform"><img src={ICON_URLS.tiktok} alt="TikTok" className="w-5 h-5" referrerPolicy="no-referrer" /></a>
+                <a href={SOCIAL_LINKS.youtube} target="_blank" rel="noopener noreferrer" className="p-2 hover:scale-110 transition-transform"><img src={ICON_URLS.youtube} alt="YouTube" className="w-5 h-5" referrerPolicy="no-referrer" /></a>
               </div>
               <a 
                 href={WHATSAPP_LINK}
@@ -422,7 +436,7 @@ export default function App() {
 
       <main>
         {/* Hero Section - Full Screen Slider */}
-        <section id="home" className="relative h-screen w-full overflow-hidden">
+        <section id="home" className="relative h-[calc(100vh-80px)] w-full overflow-hidden">
           <HeroSlider />
           
           {/* Subtle bottom fade to transition to content */}
@@ -435,7 +449,7 @@ export default function App() {
             <div className="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
               <div className="relative">
                 <img 
-                  src="https://picsum.photos/seed/team/600/800" 
+                  src="https://i.postimg.cc/CLShsfY7/Propaganda_5.png" 
                   alt="Nossa Equipe" 
                   className="rounded-[2.5rem] shadow-2xl w-full aspect-[3/4] object-cover border-8 border-brand-light"
                   referrerPolicy="no-referrer"
@@ -598,37 +612,24 @@ export default function App() {
         <section id="gallery" className="py-24 bg-brand-light">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-brand-red font-black tracking-widest uppercase text-xs">Galeria</h2>
-              <h3 className="mt-4 text-4xl font-black text-brand-navy sm:text-5xl leading-tight">
+              <h2 className="text-brand-red font-black tracking-widest uppercase text-xs font-russo">Galeria</h2>
+              <h3 className="mt-4 text-4xl font-black text-brand-navy sm:text-5xl leading-tight font-bebas tracking-wide">
                 Trabalhos Realizados
               </h3>
-              <p className="mt-6 text-lg text-brand-navy/60">
+              <p className="mt-6 text-lg text-brand-navy/60 font-figtree">
                 Confira alguns de nossos transportes e a dedicação da nossa equipe.
               </p>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {/* Instagram Embed */}
-              <motion.div 
-                whileHover={{ scale: 1.02 }}
-                className="relative group aspect-square rounded-3xl overflow-hidden shadow-lg border-4 border-white bg-white flex items-center justify-center"
-              >
-                <div 
-                  className="w-full h-full overflow-auto scrollbar-hide"
-                  dangerouslySetInnerHTML={{ __html: `
-                    <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/p/DQ7AIm6DjIy/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:16px;"> <a href="https://www.instagram.com/p/DQ7AIm6DjIy/?utm_source=ig_embed&amp;utm_campaign=loading" style=" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;" target="_blank"> <div style=" display: flex; flex-direction: row; align-items: center;"> <div style="background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 40px; margin-right: 14px; width: 40px;"></div> <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center;"> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 100px;"></div> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 60px;"></div></div></div><div style="padding: 19% 0;"></div> <div style="display:block; height:50px; margin:0 auto 12px; width:50px;"><svg width="50px" height="50px" viewBox="0 0 60 60" version="1.1" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g transform="translate(-511.000000, -20.000000)" fill="#000000"><g><path d="M556.869,30.41 C554.814,30.41 553.148,32.076 553.148,34.131 C553.148,36.186 554.814,37.852 556.869,37.852 C558.924,37.852 560.59,36.186 560.59,34.131 C560.59,32.076 558.924,30.41 556.869,30.41 M541,60.657 C535.114,60.657 530.342,55.887 530.342,50 C530.342,44.114 535.114,39.342 541,39.342 C546.887,39.342 551.658,44.114 551.658,50 C551.658,55.887 546.887,60.657 541,60.657 M541,33.886 C532.1,33.886 524.886,41.1 524.886,50 C524.886,58.899 532.1,66.113 541,66.113 C549.9,66.113 557.115,58.899 557.115,50 C557.115,41.1 549.9,33.886 541,33.886 M565.378,62.101 C565.244,65.022 564.756,66.606 564.346,67.663 C563.803,69.06 563.154,70.057 562.106,71.106 C561.058,72.155 560.06,72.803 558.662,73.347 C557.607,73.757 556.021,74.244 553.102,74.378 C549.944,74.521 548.997,74.552 541,74.552 C533.003,74.552 532.056,74.521 528.898,74.378 C525.979,74.244 524.393,73.757 523.338,73.347 C521.94,72.803 520.942,72.155 519.894,71.106 C518.846,70.057 518.197,69.06 517.654,67.663 C517.244,66.606 516.755,65.022 516.623,62.101 C516.479,58.943 516.448,57.996 516.448,50 C516.448,42.003 516.479,41.056 516.623,37.899 C516.755,34.978 517.244,33.391 517.654,32.338 C518.197,30.938 518.846,29.942 519.894,28.894 C520.942,27.846 521.94,27.196 523.338,26.654 C524.393,26.244 525.979,25.756 528.898,25.623 C532.057,25.479 533.004,25.448 541,25.448 C548.997,25.448 549.943,25.479 553.102,25.623 C556.021,25.756 557.607,26.244 558.662,26.654 C560.06,27.196 561.058,27.846 562.106,28.894 C563.154,29.942 563.803,30.938 564.346,32.338 C564.756,33.391 565.244,34.978 565.378,37.899 C565.522,41.056 565.552,42.003 565.552,50 C565.552,57.996 565.522,58.943 565.378,62.101 M570.82,37.631 C570.674,34.438 570.167,32.258 569.425,30.349 C568.659,28.377 567.633,26.702 565.965,25.035 C564.297,23.368 562.623,22.342 560.652,21.575 C558.743,20.834 556.562,20.326 553.369,20.18 C550.169,20.033 549.148,20 541,20 C532.853,20 531.831,20.033 528.631,20.18 C525.438,20.326 523.257,20.834 521.349,21.575 C519.376,22.342 517.703,23.368 516.035,25.035 C514.368,26.702 513.342,28.377 512.574,30.349 C511.834,32.258 511.326,34.438 511.181,37.631 C511.035,40.831 511,41.851 511,50 C511,58.147 511.035,59.17 511.181,62.369 C511.326,65.562 511.834,67.743 512.574,69.651 C513.342,71.625 514.368,73.296 516.035,74.965 C517.703,76.634 519.376,77.658 521.349,78.425 C523.257,79.167 525.438,79.673 528.631,79.82 C531.831,79.965 532.853,80.001 541,80.001 C549.148,80.001 550.169,79.965 553.369,79.82 C556.562,79.673 558.743,79.167 560.652,78.425 C562.623,77.658 564.297,76.634 565.965,74.965 C567.633,73.296 568.659,71.625 569.425,69.651 C570.167,67.743 570.674,65.562 570.82,62.369 C570.966,59.17 571,58.147 571,50 C571,41.851 570.966,40.831 570.82,37.631"></path></g></g></g></svg></div><div style="padding-top: 8px;"> <div style=" color:#3897f0; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:550; line-height:18px;">Ver essa foto no Instagram</div></div><div style="padding: 12.5% 0;"></div> <div style="display: flex; flex-direction: row; margin-bottom: 14px; align-items: center;"><div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(0px) translateY(7px);"></div> <div style="background-color: #F4F4F4; height: 12.5px; transform: rotate(-45deg) translateX(3px) translateY(1px); width: 12.5px; flex-grow: 0; margin-right: 14px; margin-left: 2px;"></div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(9px) translateY(-18px);"></div></div><div style="margin-left: 8px;"> <div style=" background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 20px; width: 20px;"></div> <div style=" width: 0; height: 0; border-top: 2px solid transparent; border-left: 6px solid #f4f4f4; border-bottom: 2px solid transparent; transform: translateX(16px) translateY(-4px) rotate(30deg)"></div></div><div style="margin-left: auto;"> <div style=" width: 0px; border-top: 8px solid #F4F4F4; border-right: 8px solid transparent; transform: translateY(16px);"></div> <div style=" background-color: #F4F4F4; flex-grow: 0; height: 12px; width: 16px; transform: translateY(-4px);"></div> <div style=" width: 0; height: 0; border-top: 8px solid #F4F4F4; border-left: 8px solid transparent; transform: translateY(-4px) translateX(8px);"></div></div></div> <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center; margin-bottom: 24px;"> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 224px;"></div> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 144px;"></div></div></a><p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;"><a href="https://www.instagram.com/p/DQ7AIm6DjIy/?utm_source=ig_embed&amp;utm_campaign=loading" style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none;" target="_blank">Um post compartilhado por Emerson Lima mudança (@emersonlimamudanca)</a></p></div></blockquote>
-                  ` }}
-                />
-              </motion.div>
-
-              {[2, 3, 4, 5, 6, 7, 8].map((i) => (
+              {GALLERY_IMAGES.map((url, i) => (
                 <motion.div 
                   key={i}
                   whileHover={{ scale: 1.05, rotate: 1 }}
                   className="relative group aspect-square rounded-3xl overflow-hidden shadow-lg border-4 border-white"
                 >
                   <img 
-                    src={`https://picsum.photos/seed/move-${i}/500/500`} 
+                    src={url} 
                     alt={`Trabalho ${i}`} 
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     referrerPolicy="no-referrer"
@@ -694,22 +695,38 @@ export default function App() {
               </div>
 
               <div className="mt-16 lg:mt-0 bg-brand-light p-10 sm:p-12 rounded-[3rem] border border-brand-navy/5 shadow-inner">
-                <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
+                <form className="space-y-6" onSubmit={(e) => {
+                  e.preventDefault();
+                  const formData = new FormData(e.currentTarget);
+                  const name = formData.get('name');
+                  const phone = formData.get('phone');
+                  const city = formData.get('city');
+                  const message = formData.get('message');
+                  const outsideGoias = formData.get('outsideGoias') === 'on' ? 'Sim' : 'Não';
+                  const assembly = formData.get('assembly') === 'on' ? 'Sim' : 'Não';
+                  
+                  const text = `*Novo Orçamento via Site*\n\n*Nome:* ${name}\n*Telefone:* ${phone}\n*Cidade:* ${city}\n*Mudança fora de GO?* ${outsideGoias}\n*Precisa de montagem?* ${assembly}\n*Mensagem:* ${message}`;
+                  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, '_blank');
+                }}>
                   <div>
                     <label htmlFor="name" className="block text-sm font-black text-brand-navy uppercase tracking-widest mb-2">Nome Completo</label>
                     <input 
                       type="text" 
                       id="name" 
+                      name="name"
+                      required
                       className="block w-full px-6 py-4 rounded-2xl border-none bg-white shadow-sm focus:ring-4 focus:ring-brand-red/20 transition-all text-brand-navy font-bold placeholder:text-brand-navy/20"
                       placeholder="Seu nome"
                     />
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
                       <label htmlFor="phone" className="block text-sm font-black text-brand-navy uppercase tracking-widest mb-2">Telefone</label>
                       <input 
                         type="tel" 
                         id="phone" 
+                        name="phone"
+                        required
                         className="block w-full px-6 py-4 rounded-2xl border-none bg-white shadow-sm focus:ring-4 focus:ring-brand-red/20 transition-all text-brand-navy font-bold placeholder:text-brand-navy/20"
                         placeholder="(00) 00000-0000"
                       />
@@ -719,25 +736,47 @@ export default function App() {
                       <input 
                         type="text" 
                         id="city" 
+                        name="city"
+                        required
                         className="block w-full px-6 py-4 rounded-2xl border-none bg-white shadow-sm focus:ring-4 focus:ring-brand-red/20 transition-all text-brand-navy font-bold placeholder:text-brand-navy/20"
                         placeholder="Ex: Anápolis"
                       />
                     </div>
                   </div>
+                  
+                  <div className="space-y-4 py-2">
+                    <label className="flex items-center cursor-pointer group">
+                      <div className="relative">
+                        <input type="checkbox" name="outsideGoias" className="sr-only peer" />
+                        <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-brand-red/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-red"></div>
+                      </div>
+                      <span className="ml-3 text-sm font-bold text-brand-navy/80 group-hover:text-brand-navy transition-colors">Mudança para fora do estado de Goiás?</span>
+                    </label>
+
+                    <label className="flex items-center cursor-pointer group">
+                      <div className="relative">
+                        <input type="checkbox" name="assembly" className="sr-only peer" />
+                        <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-brand-red/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-red"></div>
+                      </div>
+                      <span className="ml-3 text-sm font-bold text-brand-navy/80 group-hover:text-brand-navy transition-colors">Precisa de serviço de montagem e desmontagem de móveis?</span>
+                    </label>
+                  </div>
+
                   <div>
                     <label htmlFor="message" className="block text-sm font-black text-brand-navy uppercase tracking-widest mb-2">Mensagem</label>
                     <textarea 
                       id="message" 
-                      rows={4}
+                      name="message"
+                      rows={3}
                       className="block w-full px-6 py-4 rounded-2xl border-none bg-white shadow-sm focus:ring-4 focus:ring-brand-red/20 transition-all text-brand-navy font-bold placeholder:text-brand-navy/20"
                       placeholder="Descreva sua mudança ou frete..."
                     ></textarea>
                   </div>
                   <button 
                     type="submit"
-                    className="w-full bg-brand-red text-white font-black py-5 rounded-2xl hover:bg-brand-dark-red transition-all shadow-xl shadow-brand-red/30 active:scale-95 text-lg"
+                    className="w-full bg-brand-red text-white font-black py-5 rounded-2xl hover:bg-brand-dark-red transition-all shadow-xl shadow-brand-red/30 active:scale-95 text-lg uppercase tracking-widest"
                   >
-                    Enviar Mensagem
+                    Enviar para o WhatsApp
                   </button>
                   <p className="text-xs text-center text-brand-navy/30 font-bold uppercase tracking-widest">
                     Ao enviar, você concorda com nossa política de privacidade.
@@ -758,17 +797,17 @@ export default function App() {
               <img 
                 src={LOGO_URL} 
                 alt="Emerson Lima Mudança" 
-                className="h-16 w-auto brightness-0 invert"
+                className="h-24 w-auto brightness-0 invert"
                 referrerPolicy="no-referrer"
               />
               <p className="mt-8 text-base leading-relaxed font-medium">
                 Mudança segura, rápida e com todo cuidado que a sua família merece em Anápolis e região. Sua satisfação é nossa prioridade.
               </p>
               <div className="mt-10 flex space-x-4">
-                <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer" className="p-3 bg-white/5 rounded-xl hover:bg-brand-red transition-all duration-300"><img src={ICON_URLS.facebook} alt="Facebook" className="w-6 h-6 brightness-0 invert" referrerPolicy="no-referrer" /></a>
-                <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" className="p-3 bg-white/5 rounded-xl hover:bg-brand-red transition-all duration-300"><img src={ICON_URLS.instagram} alt="Instagram" className="w-6 h-6 brightness-0 invert" referrerPolicy="no-referrer" /></a>
-                <a href={SOCIAL_LINKS.tiktok} target="_blank" rel="noopener noreferrer" className="p-3 bg-white/5 rounded-xl hover:bg-brand-red transition-all duration-300"><img src={ICON_URLS.tiktok} alt="TikTok" className="w-6 h-6 brightness-0 invert" referrerPolicy="no-referrer" /></a>
-                <a href={SOCIAL_LINKS.youtube} target="_blank" rel="noopener noreferrer" className="p-3 bg-white/5 rounded-xl hover:bg-brand-red transition-all duration-300"><img src={ICON_URLS.youtube} alt="YouTube" className="w-6 h-6 brightness-0 invert" referrerPolicy="no-referrer" /></a>
+                <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer" className="p-2 hover:scale-110 transition-transform"><img src={ICON_URLS.facebookFooter} alt="Facebook" className="w-8 h-8" referrerPolicy="no-referrer" /></a>
+                <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" className="p-2 hover:scale-110 transition-transform"><img src={ICON_URLS.instagramFooter} alt="Instagram" className="w-8 h-8" referrerPolicy="no-referrer" /></a>
+                <a href={SOCIAL_LINKS.tiktok} target="_blank" rel="noopener noreferrer" className="p-2 hover:scale-110 transition-transform"><img src={ICON_URLS.tiktok} alt="TikTok" className="w-8 h-8" referrerPolicy="no-referrer" /></a>
+                <a href={SOCIAL_LINKS.youtube} target="_blank" rel="noopener noreferrer" className="p-2 hover:scale-110 transition-transform"><img src={ICON_URLS.youtubeFooter} alt="YouTube" className="w-8 h-8" referrerPolicy="no-referrer" /></a>
               </div>
             </div>
 
@@ -834,12 +873,10 @@ export default function App() {
           Como posso ajudar? 👋
         </span>
         
-        {/* Notification Badge */}
         <div className="absolute -top-1 -right-1 w-6 h-6 bg-red-500 text-white text-[10px] font-black rounded-full flex items-center justify-center border-2 border-white animate-bounce">
           1
         </div>
 
-        <div className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-20"></div>
         <img src={ICON_URLS.whatsapp} alt="WhatsApp" className="w-8 h-8 relative z-10" referrerPolicy="no-referrer" />
       </a>
     </div>

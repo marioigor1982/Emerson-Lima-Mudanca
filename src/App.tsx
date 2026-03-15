@@ -92,88 +92,84 @@ const GALLERY_IMAGES = [
 
 const GOOGLE_REVIEWS = [
   {
-    name: "Julia Bos",
-    time: "8 meses atrás",
+    name: "Julia Boss",
     rating: 5,
     text: "Pontualidade e organização, refletem o trabalho do Emerson e sua equipe. Cuidadosos, preparados. Organizam as caixas em cada ambiente, montam e desmontam móveis e organizam com maestria os móveis dentro do caminhão. Minha mudança foi grande, 50 caixas, móveis de 2,50 e no entanto coube tudo pela organização dele. O frete foi uma mudança de estado e ele chegou com 1 hora de antecedência na minha residência. Com certeza vou voltar a contratá-lo."
   },
   {
     name: "Laura Oliveira Aguiar",
-    time: "8 meses atrás",
     rating: 5,
-    text: "Emerson e Sandra são super atenciosos e profissionais. Realizaram minha mudança com segurança e eficiência. Podem contratar sem medo."
+    text: "Emerson e Sandra extremamente simpáticos e profissionais. Fizeram o transporta da minha mudança com muita segurança e agilidade. Podem contratar sem medo."
   },
   {
-    name: "Caio Vinicius",
-    time: "9 meses atrás",
+    name: "Caio Vinícius S M",
     rating: 5,
-    text: "Equipe muito profissional. Educados, prestativos, cuidadosos e simpáticos. Minha mudança foi muito bem organizada. Obrigado!"
+    text: "Profissionais excelentes. Educados, prestativos, atenciosos e muito simpáticos. Minha mudança foi muito bem cuidada. Obrigado."
   },
   {
-    name: "Cliente",
-    time: "1 ano atrás",
+    name: "Juliane Vieira",
     rating: 5,
-    text: "Emerson e Sandra são muito queridos e super profissionais. Já me ajudaram com 3 mudanças e sempre com o melhor preço."
+    text: "Emerson e Sandra são pessoas maravilhosas e profissionais impecáveis. Já fizeram 3 mudanças para mim e o preço é sempre o melhor."
   },
   {
-    name: "Rafael Silva",
-    time: "7 meses atrás",
+    name: "rafael silva",
     rating: 5,
-    text: "Entrega super rápida, carro com bastante espaço e tudo chegou intacto! Muito obrigado pelo excelente trabalho!"
+    text: "Entrega rápida, muito espaço no caminhão, as coisas chegaram em perfeito estados!! obrigado pelo excelente trabalho realizado!!"
   },
   {
-    name: "Cliente",
-    time: "1 ano atrás",
+    name: "Geovanny Lacerda",
     rating: 5,
-    text: "Já mudei com eles 3x, quem dera fossem menos kkkkk mas sempre foi impecável e muito cuidado com nossas coisas. Recomendo."
+    text: "Segunda vez contratando o serviço de mudança e sem arrependimentos. Pessoal nota 10, indico para qualquer um."
   },
   {
-    name: "Cliente",
-    time: "1 ano atrás",
+    name: "Luciana Schiavo",
     rating: 5,
-    text: "Parabéns pelo trabalho impecável! Muita organização, cuidado, eficiência e profissionalismo em cada detalhe durante a mudança! Obrigada!"
+    text: "Fiquei muita satisfeita com o todo,do primeiro momento que entrei em contato por telefone, foram muito educados ,sempre com muita atenção, o carinho e dedicação com todas a mudança, indico e falo vale a muito a pena contrata-los para fazer a mudança, muito obrigado por tudo o que vcs fizeram,,vcs estão de parabéns, senhor Emerson, esposa e equipe,parabéns"
   },
   {
-    name: "Cliente",
-    time: "11 meses atrás",
+    name: "Lindson Rafael",
     rating: 5,
-    text: "Super recomendo esse rapaz; é de confiança e trabalha bem, 10/10, muito atencioso."
+    text: "Fiz umaa 3 mudan com eles, gostaria de ter feito menos kkk, mas todas as vezes foram impecáveis com cuidado com nossas coisas. Recomendo"
   },
   {
-    name: "Cliente",
-    time: "2 anos atrás",
+    name: "Victor Brito",
     rating: 5,
-    text: "Emerson Lima e sua esposa são muito atenciosos, simpáticos e prestativos. Com certeza irei indicar para outras pessoas."
+    text: "Parabéns pelo serviço impecável! Organização, cuidado e eficiência em cada detalhe da nossa mudança. Obrigado"
   },
   {
-    name: "Cliente",
-    time: "2 anos atrás",
+    name: "EURIPEDES DE JESUS PINTO",
     rating: 5,
-    text: "Mudança tranquila e agradável. Os dois são muito gente boa e o transporte dos móveis foi super seguro."
+    text: "Gostei muito do trabalho de toda a equipe, parabéns a todos, vocês foram muito eficientes , Recomendo! Muito obrigada!"
   },
   {
-    name: "Cliente",
-    time: "2 anos atrás",
+    name: "Valéria Oliveira",
     rating: 5,
-    text: "Mudança tranquila e agradável. Os dois são muito gente boa e o transporte dos móveis foi super seguro."
+    text: "Serviço muito bom, pessoal cuidadoso e prestativo, gostamos muito!!"
   },
   {
-    name: "Cliente",
-    time: "1 ano atrás",
+    name: "John Lucas Pires Gonçalves John",
     rating: 5,
-    text: "Emerson e Sandra são muito queridos e super profissionais. Já me ajudaram com 3 mudanças e sempre com o melhor preço."
+    text: "Fizeram minha mudança de Anápolis para orizona  , muito cuidadoso  responsável e profissional ... Sem dúvida a melhor transportadora  de Anápolis e região  . Muito educado e prestativo. Super indico ..."
   },
   {
-    name: "Cliente",
-    time: "1 ano atrás",
+    name: "Bruna Walena",
     rating: 5,
-    text: "Emerson e Sandra são muito queridos e super profissionais. Já me ajudaram com 3 mudanças e sempre com o melhor preço."
+    text: "O Emerson Lima e a sua esposa são muito atenciosos, simpáticos e prestam um ótimo serviço. Com certeza eu os indico para outras pessoas."
   },
   {
-    name: "Cliente",
-    time: "1 ano atrás",
+    name: "Fabiana Paião",
     rating: 5,
-    text: "Emerson e Sandra são muito queridos e super profissionais. Já me ajudaram com 3 mudanças e sempre com o melhor preço."
+    text: "Foi super boa, encaixotaram tudo com muito cuidado e fizeram todo transporte da minha mudança aqui em Pirenópolis. Aprovado e recomendo!"
+  },
+  {
+    name: "Fabio Constat",
+    rating: 5,
+    text: "No Emerson pode confiar é um profissional educado, honesto e além disso é muito experiente. Precisou de frete e não gosta de passar raiva , chama o Emerson!"
+  },
+  {
+    name: "Mario Igor de Jesus",
+    rating: 5,
+    text: "Emerson e sua esposa são profissionais extremamente dedicados. Nossa experiência com a prestação de serviços deles foi excelente. O atendimento foi ótimo, com extremo cuidado no manuseio dos móveis e muita atenção aos detalhes. Recomendo com confiança, pois a qualidade do serviço prestado é realmente garantida."
   }
 ];
 
@@ -286,6 +282,43 @@ function HeroSlider() {
 export default function App() {
   const [reviews, setReviews] = useState<any[]>([]);
   const [isLoadingReviews, setIsLoadingReviews] = useState(true);
+  const [selectedReview, setSelectedReview] = useState<any | null>(null);
+  const [carouselIndex, setCarouselIndex] = useState(0);
+  const [itemsToShow, setItemsToShow] = useState(3);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) setItemsToShow(3);
+      else if (window.innerWidth >= 768) setItemsToShow(2);
+      else setItemsToShow(1);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const AVATAR_COLORS = [
+    'bg-blue-100 text-blue-600',
+    'bg-purple-100 text-purple-600',
+    'bg-pink-100 text-pink-600',
+    'bg-indigo-100 text-indigo-600',
+    'bg-teal-100 text-teal-600',
+    'bg-orange-100 text-orange-600',
+    'bg-emerald-100 text-emerald-600'
+  ];
+
+  const getAvatarColor = (name: string) => {
+    const charCode = name.charCodeAt(0);
+    return AVATAR_COLORS[charCode % AVATAR_COLORS.length];
+  };
+
+  const nextSlide = () => {
+    setCarouselIndex((prev) => (prev + 1) % reviews.length);
+  };
+
+  const prevSlide = () => {
+    setCarouselIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
+  };
 
   useEffect(() => {
     // We use the static list provided by the user for an exact replica
@@ -591,12 +624,12 @@ export default function App() {
         </section>
 
         {/* Reviews Section */}
-        <section id="reviews" className="py-24 bg-[#f9fafb] overflow-hidden">
+        <section id="reviews" className="py-24 bg-[#f9fafb] overflow-hidden relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-brand-red font-black tracking-widest uppercase text-xs font-russo">Depoimentos</h2>
               <h3 className="mt-4 text-4xl font-black text-brand-navy sm:text-5xl leading-tight font-bebas tracking-wide">
-                Depoimentos Reais de Clientes no Google
+                O que nossos clientes dizem no Google
               </h3>
               <div className="mt-6 flex justify-center items-center space-x-2">
                 {[1, 2, 3, 4, 5].map((s) => <Star key={s} className="w-6 h-6 fill-brand-red text-brand-red" />)}
@@ -609,40 +642,126 @@ export default function App() {
                 <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-red"></div>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {reviews.map((review, idx) => (
-                  <motion.div
-                    key={idx}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: idx * 0.05 }}
-                    className="bg-white p-8 rounded-3xl border border-brand-navy/5 relative group hover:shadow-xl transition-all shadow-sm"
+              <div className="relative group">
+                {/* Navigation Buttons */}
+                <button 
+                  onClick={prevSlide}
+                  className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white shadow-lg text-brand-navy hover:text-brand-red transition-all opacity-0 group-hover:opacity-100 hidden md:block"
+                >
+                  <ChevronLeft className="w-6 h-6" />
+                </button>
+                <button 
+                  onClick={nextSlide}
+                  className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white shadow-lg text-brand-navy hover:text-brand-red transition-all opacity-0 group-hover:opacity-100 hidden md:block"
+                >
+                  <ChevronRight className="w-6 h-6" />
+                </button>
+
+                <div className="overflow-hidden">
+                  <motion.div 
+                    className="flex transition-all duration-500 ease-out"
+                    animate={{ x: `-${carouselIndex * (100 / itemsToShow)}%` }}
                   >
-                    <Quote className="absolute top-6 right-8 w-12 h-12 text-brand-red/10 group-hover:text-brand-red/20 transition-colors" />
-                    <div className="flex mb-4">
-                      {[...Array(review.rating)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-brand-red text-brand-red" />
-                      ))}
-                    </div>
-                    <p className="text-brand-navy/80 leading-relaxed mb-6 relative z-10 font-figtree text-lg">
-                      "{review.text}"
-                    </p>
-                    <div className="flex items-center">
-                      <div className={`w-12 h-12 rounded-full flex items-center justify-center font-black text-lg shadow-inner ${
-                        review.name === 'Cliente' ? 'bg-gray-100 text-gray-400' : 'bg-brand-red/10 text-brand-red'
-                      }`}>
-                        {review.name === 'Cliente' ? <User className="w-6 h-6" /> : review.name.charAt(0)}
+                    {reviews.map((review, idx) => (
+                      <div 
+                        key={idx} 
+                        className="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-4"
+                      >
+                        <div className="bg-white p-8 rounded-3xl border border-brand-navy/5 relative h-[320px] flex flex-col justify-between hover:shadow-xl transition-all shadow-sm">
+                          <div>
+                            <div className="flex mb-4">
+                              {[...Array(review.rating)].map((_, i) => (
+                                <Star key={i} className="w-4 h-4 fill-brand-red text-brand-red" />
+                              ))}
+                            </div>
+                            <p className="text-brand-navy/80 leading-relaxed mb-4 font-figtree text-base line-clamp-4">
+                              "{review.text}"
+                            </p>
+                            {review.text.length > 150 && (
+                              <button 
+                                onClick={() => setSelectedReview(review)}
+                                className="text-brand-red font-bold text-sm hover:underline"
+                              >
+                                Ler mais
+                              </button>
+                            )}
+                          </div>
+                          
+                          <div className="flex items-center mt-4">
+                            <div className={`w-12 h-12 rounded-full flex items-center justify-center font-black text-lg shadow-inner ${getAvatarColor(review.name)}`}>
+                              {review.name.charAt(0).toUpperCase()}
+                            </div>
+                            <div className="ml-4">
+                              <p className="font-black text-brand-navy text-base line-clamp-1">{review.name}</p>
+                              <p className="text-xs font-bold text-brand-navy/40 uppercase tracking-wider">Cliente Verificado</p>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <div className="ml-4">
-                        <p className="font-black text-brand-navy text-base">{review.name}</p>
-                        <p className="text-xs font-bold text-brand-navy/40 uppercase tracking-wider">{review.time || 'Cliente Verificado'}</p>
-                      </div>
-                    </div>
+                    ))}
                   </motion.div>
-                ))}
+                </div>
+
+                {/* Indicators */}
+                <div className="mt-12 flex justify-center space-x-2">
+                  {reviews.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setCarouselIndex(idx)}
+                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                        idx === carouselIndex ? 'bg-brand-red w-6' : 'bg-brand-navy/20'
+                      }`}
+                    />
+                  ))}
+                </div>
               </div>
             )}
+
+            {/* Modal */}
+            <AnimatePresence>
+              {selectedReview && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    onClick={() => setSelectedReview(null)}
+                    className="absolute inset-0 bg-brand-navy/60 backdrop-blur-sm"
+                  />
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                    className="relative bg-white w-full max-w-2xl rounded-[2.5rem] p-8 md:p-12 shadow-2xl"
+                  >
+                    <button 
+                      onClick={() => setSelectedReview(null)}
+                      className="absolute top-6 right-6 p-2 rounded-full hover:bg-gray-100 transition-colors"
+                    >
+                      <X className="w-6 h-6 text-brand-navy" />
+                    </button>
+
+                    <div className="flex mb-6">
+                      {[...Array(selectedReview.rating)].map((_, i) => (
+                        <Star key={i} className="w-6 h-6 fill-brand-red text-brand-red" />
+                      ))}
+                    </div>
+
+                    <h4 className="text-2xl font-black text-brand-navy mb-4">{selectedReview.name}</h4>
+                    <p className="text-brand-navy/70 leading-relaxed text-lg font-figtree mb-8 max-h-[400px] overflow-y-auto pr-4 custom-scrollbar">
+                      "{selectedReview.text}"
+                    </p>
+
+                    <button
+                      onClick={() => setSelectedReview(null)}
+                      className="w-full py-4 rounded-2xl bg-brand-navy text-white font-black hover:bg-brand-red transition-all"
+                    >
+                      Fechar
+                    </button>
+                  </motion.div>
+                </div>
+              )}
+            </AnimatePresence>
 
             <div className="mt-16 text-center">
               <a 

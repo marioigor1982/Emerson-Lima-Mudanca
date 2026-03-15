@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { GoogleGenAI } from "@google/genai";
 import { 
   Phone, 
@@ -176,6 +177,7 @@ const GOOGLE_REVIEWS = [
 function HeroSlider() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [showMobileText, setShowMobileText] = useState(true);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -183,6 +185,15 @@ function HeroSlider() {
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
+
+  useEffect(() => {
+    if (isMobile) {
+      const timer = setTimeout(() => {
+        setShowMobileText(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [isMobile]);
 
   useEffect(() => {
     if (isMobile) return;
@@ -239,17 +250,17 @@ function HeroSlider() {
 
       {/* Hero Text Content */}
       <AnimatePresence>
-        {currentItem.showText && (
+        {currentItem.showText && (isMobile ? showMobileText : true) && (
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -30 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="absolute inset-0 flex items-center justify-center z-10 px-4"
+            className={`absolute inset-0 flex items-center justify-center z-10 px-4 ${isMobile ? 'bg-white' : ''}`}
           >
             <div className="max-w-4xl text-center">
               <h1 className="text-5xl md:text-7xl font-black text-brand-navy leading-tight drop-shadow-sm font-bebas tracking-wider">
-                Mudanças com <span className="text-brand-red underline decoration-brand-red/30">Segurança</span> e <span className="text-brand-red underline decoration-brand-red/30">Agilidade</span>
+                Mudanças com <span className="text-brand-red">Segurança</span> e <span className="text-brand-red">Agilidade</span>
               </h1>
               <p className="mt-8 text-xl md:text-2xl text-brand-navy/90 font-bold max-w-2xl mx-auto leading-relaxed font-quicksand">
                 Transportamos seus sonhos com o cuidado que eles merecem. Atendimento em Anápolis e todo o Brasil.
@@ -261,12 +272,16 @@ function HeroSlider() {
                   rel="noopener noreferrer"
                   className="w-full sm:w-auto bg-brand-red text-white px-10 py-5 rounded-2xl text-lg font-black hover:bg-brand-dark-red transition-all shadow-2xl flex items-center justify-center gap-3 group"
                 >
-                  <img src={ICON_URLS.whatsapp} alt="WhatsApp" className="w-6 h-6 brightness-0 invert" referrerPolicy="no-referrer" />
                   Solicitar Orçamento
-                  <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </a>
                 <a 
-                  href="#services"
+                  href="/servicos"
+                  onClick={(e) => {
+                    if (!isMobile) {
+                      e.preventDefault();
+                      document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
                   className="w-full sm:w-auto bg-brand-navy text-white px-10 py-5 rounded-2xl text-lg font-black hover:bg-brand-navy/90 transition-all shadow-xl"
                 >
                   Nossos Serviços
@@ -295,12 +310,14 @@ function HeroSlider() {
   );
 }
 
-export default function App() {
+function MainContent() {
   const [reviews, setReviews] = useState<any[]>([]);
   const [isLoadingReviews, setIsLoadingReviews] = useState(true);
   const [selectedReview, setSelectedReview] = useState<any | null>(null);
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [itemsToShow, setItemsToShow] = useState(3);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
@@ -312,6 +329,28 @@ export default function App() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Handle scrolling to sections based on path
+  useEffect(() => {
+    const path = location.pathname;
+    const sectionMap: { [key: string]: string } = {
+      '/': 'home',
+      '/inicio': 'home',
+      '/sobre': 'about',
+      '/servicos': 'services',
+      '/depoimentos': 'reviews',
+      '/galeria': 'gallery',
+      '/contato': 'contact'
+    };
+
+    const sectionId = sectionMap[path];
+    if (sectionId) {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [location]);
 
   const AVATAR_COLORS = [
     'bg-blue-100 text-blue-600',
@@ -367,12 +406,20 @@ export default function App() {
   }, []);
 
   const navLinks = [
-    { name: 'Início', href: '#home' },
-    { name: 'Sobre Nós', href: '#about' },
-    { name: 'Serviços', href: '#services' },
-    { name: 'Avaliações', href: '#reviews' },
-    { name: 'Galeria', href: '#gallery' },
-    { name: 'Contato', href: '#contact' },
+    { name: 'Início', href: '/inicio' },
+    { name: 'Sobre Nós', href: '/sobre' },
+    { name: 'Serviços', href: '/servicos' },
+    { name: 'Avaliações', href: '/depoimentos' },
+    { name: 'Galeria', href: '/galeria' },
+    { name: 'Contato', href: '/contato' },
+  ];
+
+  const serviceColors = [
+    '#BF0413',
+    '#73020C',
+    '#020E26',
+    '#064073',
+    '#F2F2F2'
   ];
 
   const services = [
@@ -417,36 +464,13 @@ export default function App() {
   return (
     <div className="min-h-screen bg-brand-light font-sans text-brand-navy selection:bg-brand-red/10 selection:text-brand-red">
       
-      {/* Floating WhatsApp Button */}
-      <motion.a 
-        href={WHATSAPP_LINK}
-        target="_blank"
-        rel="noopener noreferrer"
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        className="fixed bottom-6 right-6 z-50 p-2 flex items-center justify-center group"
-        aria-label="Chamar no WhatsApp"
-      >
-        <motion.div
-          animate={{ scale: [1, 1.2, 1] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="absolute inset-0 bg-brand-red/10 rounded-full"
-        />
-        <img src={ICON_URLS.whatsapp} alt="WhatsApp" className="w-14 h-14 relative z-10" referrerPolicy="no-referrer" />
-        <span className="absolute right-full mr-4 bg-white text-brand-navy px-4 py-2 rounded-xl shadow-xl font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-          Fale Conosco
-        </span>
-      </motion.a>
-
       {/* Header */}
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-brand-navy/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
             <div className="flex-shrink-0">
-              <a href="#home">
+              <a href="/" onClick={(e) => { e.preventDefault(); navigate('/'); }}>
                 <img 
                   src={LOGO_URL} 
                   alt="Emerson Lima Mudança" 
@@ -462,6 +486,10 @@ export default function App() {
                 <a 
                   key={link.name} 
                   href={link.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate(link.href);
+                  }}
                   className="text-sm font-bold text-brand-navy/70 hover:text-brand-red transition-colors uppercase"
                 >
                   {link.name}
@@ -483,7 +511,7 @@ export default function App() {
                 rel="noopener noreferrer"
                 className="bg-brand-red text-white px-6 py-3 rounded-xl text-sm font-bold hover:bg-brand-dark-red transition-all shadow-lg shadow-brand-red/20 active:scale-95"
               >
-                Orçamento Grátis
+                Solicitar Orçamento
               </a>
             </div>
 
@@ -513,12 +541,26 @@ export default function App() {
                   <a 
                     key={link.name} 
                     href={link.href}
-                    onClick={() => setIsMenuOpen(false)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsMenuOpen(false);
+                      navigate(link.href);
+                    }}
                     className="block px-3 py-4 text-base font-bold text-brand-navy/70 hover:text-brand-red hover:bg-brand-light rounded-md"
                   >
                     {link.name}
                   </a>
                 ))}
+                <div className="pt-4 pb-4">
+                  <a 
+                    href={WHATSAPP_LINK}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full text-center py-4 bg-brand-red text-white font-black rounded-xl"
+                  >
+                    Solicitar Orçamento
+                  </a>
+                </div>
                 <div className="pt-4 flex justify-around border-t border-brand-navy/5">
                   <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer" className="p-2 opacity-40"><img src={ICON_URLS.facebook} alt="Facebook" className="w-6 h-6" referrerPolicy="no-referrer" /></a>
                   <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" className="p-2 opacity-40"><img src={ICON_URLS.instagram} alt="Instagram" className="w-6 h-6" referrerPolicy="no-referrer" /></a>
@@ -606,24 +648,29 @@ export default function App() {
             </div>
 
             <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {services.map((service, index) => (
-                <motion.div 
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-white p-10 rounded-[2rem] shadow-sm border border-brand-navy/5 hover:shadow-xl hover:-translate-y-1 transition-all group"
-                >
-                  <div className="w-16 h-16 bg-brand-light rounded-2xl flex items-center justify-center text-brand-red mb-8 group-hover:bg-brand-red group-hover:text-white transition-all duration-300">
-                    {service.icon}
-                  </div>
-                  <h4 className="text-2xl font-black text-brand-navy mb-4">{service.title}</h4>
-                  <p className="text-brand-navy/60 leading-relaxed">
-                    {service.description}
-                  </p>
-                </motion.div>
-              ))}
+              {services.map((service, index) => {
+                const bgColor = serviceColors[index % serviceColors.length];
+                const isLight = bgColor === '#F2F2F2';
+                return (
+                  <motion.div 
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    style={{ backgroundColor: bgColor }}
+                    className={`p-10 rounded-[2rem] shadow-sm border border-brand-navy/5 hover:shadow-xl hover:-translate-y-1 transition-all group ${isLight ? 'text-brand-navy' : 'text-white'}`}
+                  >
+                    <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-8 transition-all duration-300 ${isLight ? 'bg-brand-navy/10 text-brand-red group-hover:bg-brand-red group-hover:text-white' : 'bg-white/10 text-white group-hover:bg-white group-hover:text-brand-navy'}`}>
+                      {service.icon}
+                    </div>
+                    <h4 className="text-2xl font-black mb-4">{service.title}</h4>
+                    <p className={`leading-relaxed ${isLight ? 'text-brand-navy/60' : 'text-white/80'}`}>
+                      {service.description}
+                    </p>
+                  </motion.div>
+                );
+              })}
             </div>
 
             <div className="mt-16 text-center">
@@ -989,10 +1036,10 @@ export default function App() {
                 Mudança segura, rápida e com todo cuidado que a sua família merece em Anápolis e região. Sua satisfação é nossa prioridade.
               </p>
               <div className="mt-10 flex space-x-4">
-                <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer" className="p-2 hover:scale-110 transition-transform"><img src={ICON_URLS.facebookFooter} alt="Facebook" className="w-8 h-8" referrerPolicy="no-referrer" /></a>
-                <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" className="p-2 hover:scale-110 transition-transform"><img src={ICON_URLS.instagramFooter} alt="Instagram" className="w-8 h-8" referrerPolicy="no-referrer" /></a>
-                <a href={SOCIAL_LINKS.tiktok} target="_blank" rel="noopener noreferrer" className="p-2 hover:scale-110 transition-transform"><img src={ICON_URLS.tiktok} alt="TikTok" className="w-8 h-8" referrerPolicy="no-referrer" /></a>
-                <a href={SOCIAL_LINKS.youtube} target="_blank" rel="noopener noreferrer" className="p-2 hover:scale-110 transition-transform"><img src={ICON_URLS.youtubeFooter} alt="YouTube" className="w-8 h-8" referrerPolicy="no-referrer" /></a>
+                <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer" className="p-2 hover:scale-110 transition-transform"><img src={ICON_URLS.facebookFooter} alt="Facebook" className="w-8 h-8 brightness-0 invert" referrerPolicy="no-referrer" /></a>
+                <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" className="p-2 hover:scale-110 transition-transform"><img src={ICON_URLS.instagramFooter} alt="Instagram" className="w-8 h-8 brightness-0 invert" referrerPolicy="no-referrer" /></a>
+                <a href={SOCIAL_LINKS.tiktok} target="_blank" rel="noopener noreferrer" className="p-2 hover:scale-110 transition-transform"><img src={ICON_URLS.tiktok} alt="TikTok" className="w-8 h-8 brightness-0 invert" referrerPolicy="no-referrer" /></a>
+                <a href={SOCIAL_LINKS.youtube} target="_blank" rel="noopener noreferrer" className="p-2 hover:scale-110 transition-transform"><img src={ICON_URLS.youtubeFooter} alt="YouTube" className="w-8 h-8 brightness-0 invert" referrerPolicy="no-referrer" /></a>
               </div>
             </div>
 
@@ -1002,7 +1049,16 @@ export default function App() {
               <ul className="space-y-5 text-sm font-bold">
                 {navLinks.map((link) => (
                   <li key={link.name}>
-                    <a href={link.href} className="hover:text-brand-red transition-colors">{link.name}</a>
+                    <a 
+                      href={link.href} 
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate(link.href);
+                      }}
+                      className="hover:text-brand-red transition-colors"
+                    >
+                      {link.name}
+                    </a>
                   </li>
                 ))}
               </ul>
@@ -1051,19 +1107,33 @@ export default function App() {
         href={WHATSAPP_LINK}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-16 h-16 bg-[#25D366] text-white rounded-full shadow-[0_10px_25px_rgba(37,211,102,0.4)] hover:scale-110 transition-transform duration-300 group"
+        className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-16 h-16 bg-[#25D366] text-white rounded-full shadow-[0_10px_25px_rgba(37,211,102,0.4)] hover:scale-110 transition-transform duration-300 group animate-[bounce_3s_infinite]"
         aria-label="Falar no WhatsApp"
       >
-        <span className="absolute -top-14 right-0 bg-white text-brand-navy text-sm font-black px-4 py-2 rounded-xl shadow-xl opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0 whitespace-nowrap pointer-events-none border border-brand-navy/5">
+        <span className="absolute -top-14 right-0 bg-white text-brand-navy text-xs font-black px-4 py-2 rounded-xl shadow-xl opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0 whitespace-nowrap pointer-events-none border border-brand-navy/10 flex items-center gap-2">
+          <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
           Como posso ajudar? 👋
         </span>
         
-        <div className="absolute -top-1 -right-1 w-6 h-6 bg-red-500 text-white text-[10px] font-black rounded-full flex items-center justify-center border-2 border-white animate-bounce">
+        <div className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-20"></div>
+
+        {/* Notification Badge */}
+        <div className="absolute -top-1 -right-1 w-6 h-6 bg-red-600 text-white text-[11px] font-bold flex items-center justify-center rounded-full border-2 border-white z-20 shadow-lg">
           1
         </div>
 
-        <img src={ICON_URLS.whatsapp} alt="WhatsApp" className="w-8 h-8 relative z-10" referrerPolicy="no-referrer" />
+        <img src={ICON_URLS.whatsapp} alt="WhatsApp" className="w-9 h-9 relative z-10" referrerPolicy="no-referrer" />
       </a>
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="*" element={<MainContent />} />
+      </Routes>
+    </BrowserRouter>
   );
 }

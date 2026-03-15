@@ -175,21 +175,35 @@ const GOOGLE_REVIEWS = [
 
 function HeroSlider() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return;
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % HERO_ITEMS.length);
     }, 8000); // 8 seconds per slide
     return () => clearInterval(interval);
-  }, []);
+  }, [isMobile]);
 
-  const currentItem = HERO_ITEMS[currentIndex];
+  const currentItem = isMobile ? {
+    type: 'video',
+    url: 'https://ik.imagekit.io/marioigor82/EMERSON%20LIMA%20MOBILE.mp4',
+    showText: true,
+    overlay: 'whitish'
+  } : HERO_ITEMS[currentIndex];
 
   return (
     <div className="absolute inset-0 w-full h-full overflow-hidden">
       <AnimatePresence mode="wait">
         <motion.div
-          key={currentIndex}
+          key={isMobile ? 'mobile-hero' : currentIndex}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -263,18 +277,20 @@ function HeroSlider() {
         )}
       </AnimatePresence>
       
-      {/* Navigation Dots */}
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex space-x-3">
-        {HERO_ITEMS.map((_, idx) => (
-          <button
-            key={idx}
-            onClick={() => setCurrentIndex(idx)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              idx === currentIndex ? 'bg-brand-red w-8' : 'bg-white/50 hover:bg-white'
-            }`}
-          />
-        ))}
-      </div>
+      {/* Navigation Dots - Hidden on Mobile */}
+      {!isMobile && (
+        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex space-x-3">
+          {HERO_ITEMS.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setCurrentIndex(idx)}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                idx === currentIndex ? 'bg-brand-red w-8' : 'bg-white/50 hover:bg-white'
+              }`}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

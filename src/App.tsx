@@ -80,6 +80,15 @@ const HERO_ITEMS = [
   }
 ];
 
+const GALLERY_VIDEOS = [
+  "https://ik.imagekit.io/marioigor82/v%C3%ADdeo%201.mp4",
+  "https://ik.imagekit.io/marioigor82/V%C3%ADdeo%202.mp4",
+  "https://ik.imagekit.io/marioigor82/V%C3%ADdeo%203.mp4",
+  "https://ik.imagekit.io/marioigor82/V%C3%ADdeo%204.mp4",
+  "https://ik.imagekit.io/marioigor82/V%C3%ADdeo%205.mp4",
+  "https://ik.imagekit.io/marioigor82/V%C3%ADdeo%206.mp4"
+];
+
 const GALLERY_IMAGES = [
   "https://i.postimg.cc/Vs7hzdGf/FLYER-EMERSON2.png",
   "https://i.postimg.cc/PqhyWjVG/FLYER-EMERSON3.webp",
@@ -828,7 +837,7 @@ function MainContent() {
 
             <div className="mt-16 text-center">
               <a 
-                href="https://www.google.com/maps/place/An%C3%A1polis+Fretes/@-16.3221578,-48.9589206,16z"
+                href="https://www.google.com/maps/search/?api=1&query=Rua+Itamaraty,+Q+02+L+08,+Vila+Mariana,+Anápolis/GO+-+CEP+75143-530"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 px-8 py-4 bg-white border-2 border-brand-navy/10 rounded-2xl text-brand-navy font-black hover:bg-brand-navy hover:text-white hover:border-brand-navy transition-all shadow-lg"
@@ -853,10 +862,27 @@ function MainContent() {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {/* Videos */}
+              {GALLERY_VIDEOS.map((url, i) => (
+                <motion.div 
+                  key={`video-${i}`}
+                  whileHover={{ scale: 1.02 }}
+                  className="relative aspect-video rounded-3xl overflow-hidden shadow-xl border-4 border-white bg-brand-navy/5"
+                >
+                  <video 
+                    src={url} 
+                    controls
+                    className="w-full h-full object-cover"
+                    playsInline
+                  />
+                </motion.div>
+              ))}
+
+              {/* Images */}
               {GALLERY_IMAGES.map((url, i) => (
                 <motion.div 
-                  key={i}
+                  key={`image-${i}`}
                   whileHover={{ scale: 1.05, rotate: 1 }}
                   className="relative group aspect-square rounded-3xl overflow-hidden shadow-lg border-4 border-white"
                 >
@@ -906,7 +932,7 @@ function MainContent() {
                     </div>
                     <div className="ml-5">
                       <p className="text-sm font-bold text-brand-navy/40 uppercase tracking-widest">Endereço</p>
-                      <p className="text-2xl font-black text-brand-navy">R. Quintino Bocaiúva, 473 - Anápolis - GO</p>
+                      <p className="text-2xl font-black text-brand-navy">Rua Itamaraty, Q 02 L 08, Vila Mariana, Anápolis/GO - CEP 75143-530</p>
                     </div>
                   </div>
                 </div>
@@ -914,7 +940,7 @@ function MainContent() {
                 {/* Map Iframe */}
                 <div className="mt-12 rounded-[2rem] overflow-hidden h-80 shadow-2xl border-8 border-brand-light">
                   <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3826.969137025219!2d-48.9589206!3d-16.3221578!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x935ea47596000001%3A0x7d0e3a5a5a5a5a5a!2sAn%C3%A1polis+Fretes!5e0!3m2!1spt-BR!2sbr!4v1710190000000!5m2!1spt-BR!2sbr" 
+                    src="https://maps.google.com/maps?q=Rua%20Itamaraty,%20Q%2002%20L%2008,%20Vila%20Mariana,%20Anápolis/GO&t=&z=15&ie=UTF8&iwloc=&output=embed" 
                     width="100%" 
                     height="100%" 
                     style={{ border: 0 }} 
@@ -1082,7 +1108,7 @@ function MainContent() {
               <ul className="space-y-6 text-sm font-bold">
                 <li className="flex items-start">
                   <MapPin className="w-6 h-6 mr-4 text-brand-red flex-shrink-0" />
-                  <span className="leading-relaxed">R. Quintino Bocaiúva, 473 - ap03 - St. Central, Anápolis - GO, 75043-030, Brasil.</span>
+                  <span className="leading-relaxed">Rua Itamaraty, Q 02 L 08, Vila Mariana, Anápolis/GO - CEP 75143-530</span>
                 </li>
                 <li className="flex items-center">
                   <Phone className="w-6 h-6 mr-4 text-brand-red flex-shrink-0" />

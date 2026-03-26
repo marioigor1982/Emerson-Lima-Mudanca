@@ -31,7 +31,7 @@ const LOGO_URL = "https://i.postimg.cc/T1HpDgQZ/Logo-Emerson-Lima-Mudanca-2-Copi
 
 const SOCIAL_LINKS = {
   facebook: "https://www.facebook.com/Emersonlimamudanca",
-  instagram: "https://www.instagram.com/emersonlimamudança",
+  instagram: "https://www.instagram.com/emersonlimamudanca",
   youtube: "https://www.youtube.com/@Emersonlimamudança",
   tiktok: "https://www.tiktok.com/@emersonlima98?is_from_webapp=1&sender_device=pc"
 };
@@ -1123,7 +1123,7 @@ function MainContent() {
           </div>
 
           <div className="mt-20 pt-10 border-t border-white/5 text-center text-xs font-bold uppercase tracking-[0.2em] opacity-30">
-            <p>&copy; {new Date().getFullYear()} Emerson Lima Mudança. Todos os direitos reservados. Desenvolvido para Anápolis-GO.</p>
+            <p>&copy; {new Date().getFullYear()} Emerson Lima Mudança. Todos os direitos reservados. Desenvolvido por <a href="https://www.instagram.com/marioigor_82/" target="_blank" rel="noopener noreferrer" className="hover:text-brand-red transition-colors">Mario Igor de Jesus</a>.</p>
           </div>
         </div>
       </footer>

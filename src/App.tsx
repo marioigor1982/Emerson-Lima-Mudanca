@@ -120,7 +120,9 @@ const GALLERY_IMAGES = [
   "https://i.postimg.cc/vTKF40hK/Whats-App-Image-2026-03-29-at-10-32-58.jpg",
   "https://i.postimg.cc/nrWbX325/Whats-App-Image-2026-03-29-at-10-32-58-(1).jpg",
   "https://i.postimg.cc/WzyLd58C/Whats-App-Image-2026-03-29-at-10-32-58-(2).jpg",
-  "https://i.postimg.cc/RhY5Wgd2/Whats-App-Image-2026-03-29-at-10-32-58-(3).jpg"
+  "https://i.postimg.cc/RhY5Wgd2/Whats-App-Image-2026-03-29-at-10-32-58-(3).jpg",
+  "https://i.postimg.cc/Qdtm4XX4/FOTO-1.jpg",
+  "https://i.postimg.cc/YCs3TJ0C/FOTO-2.jpg"
 ];
 
 const GOOGLE_REVIEWS = [
@@ -348,6 +350,7 @@ function MainContent() {
   const [selectedReview, setSelectedReview] = useState<any | null>(null);
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [itemsToShow, setItemsToShow] = useState(3);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -436,6 +439,22 @@ function MainContent() {
       }
     };
   }, []);
+
+  const allGalleryItems = [
+    ...GALLERY_VIDEOS.map(url => ({ type: 'video', url })),
+    ...GALLERY_IMAGES.map(url => ({ type: 'image', url }))
+  ];
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (lightboxIndex === null) return;
+      if (e.key === 'Escape') setLightboxIndex(null);
+      if (e.key === 'ArrowRight') setLightboxIndex((prev) => (prev! + 1) % allGalleryItems.length);
+      if (e.key === 'ArrowLeft') setLightboxIndex((prev) => (prev! - 1 + allGalleryItems.length) % allGalleryItems.length);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [lightboxIndex, allGalleryItems.length]);
 
   const navLinks = [
     { name: 'Início', href: '/inicio' },
@@ -891,14 +910,19 @@ function MainContent() {
                 <motion.div 
                   key={`video-${i}`}
                   whileHover={{ scale: 1.02 }}
-                  className="relative aspect-video rounded-3xl overflow-hidden shadow-xl border-4 border-white bg-brand-navy/5"
+                  onClick={() => setLightboxIndex(i)}
+                  className="relative aspect-video rounded-3xl overflow-hidden shadow-xl border-4 border-white bg-brand-navy/5 cursor-pointer group"
                 >
                   <video 
                     src={url} 
-                    controls
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover pointer-events-none"
                     playsInline
                   />
+                  <div className="absolute inset-0 bg-brand-navy/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <div className="p-3 bg-white/20 backdrop-blur-md rounded-full border border-white/30">
+                      <ChevronRight className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
                 </motion.div>
               ))}
 
@@ -907,7 +931,8 @@ function MainContent() {
                 <motion.div 
                   key={`image-${i}`}
                   whileHover={{ scale: 1.05, rotate: 1 }}
-                  className="relative group aspect-square rounded-3xl overflow-hidden shadow-lg border-4 border-white"
+                  onClick={() => setLightboxIndex(i + GALLERY_VIDEOS.length)}
+                  className="relative group aspect-square rounded-3xl overflow-hidden shadow-lg border-4 border-white cursor-pointer"
                 >
                   <img 
                     src={url} 
@@ -1173,6 +1198,75 @@ function MainContent() {
 
         <img src={ICON_URLS.whatsapp} alt="WhatsApp" className="w-9 h-9 relative z-10" referrerPolicy="no-referrer" />
       </a>
+
+      {/* Lightbox */}
+      <AnimatePresence>
+        {lightboxIndex !== null && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-brand-navy/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-10"
+          >
+            <button 
+              onClick={() => setLightboxIndex(null)}
+              className="absolute top-6 right-6 z-[110] p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-all"
+            >
+              <X className="w-8 h-8" />
+            </button>
+
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                setLightboxIndex((prev) => (prev! - 1 + allGalleryItems.length) % allGalleryItems.length);
+              }}
+              className="absolute left-4 md:left-10 top-1/2 -translate-y-1/2 z-[110] p-4 bg-white/10 hover:bg-white/20 rounded-full text-white transition-all"
+            >
+              <ChevronLeft className="w-10 h-10" />
+            </button>
+
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                setLightboxIndex((prev) => (prev! + 1) % allGalleryItems.length);
+              }}
+              className="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 z-[110] p-4 bg-white/10 hover:bg-white/20 rounded-full text-white transition-all"
+            >
+              <ChevronRight className="w-10 h-10" />
+            </button>
+
+            <motion.div 
+              key={lightboxIndex}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="relative max-w-5xl w-full max-h-[80vh] flex items-center justify-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {allGalleryItems[lightboxIndex].type === 'video' ? (
+                <video 
+                  src={allGalleryItems[lightboxIndex].url} 
+                  controls 
+                  autoPlay
+                  className="max-w-full max-h-[80vh] rounded-2xl shadow-2xl"
+                />
+              ) : (
+                <img 
+                  src={allGalleryItems[lightboxIndex].url} 
+                  alt="Trabalho detalhe" 
+                  className="max-w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl"
+                  referrerPolicy="no-referrer"
+                />
+              )}
+              <div className="absolute -bottom-12 left-0 right-0 text-center">
+                <p className="text-white/60 font-bold uppercase tracking-widest text-sm">
+                  Item {lightboxIndex + 1} de {allGalleryItems.length}
+                </p>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

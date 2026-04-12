@@ -73,6 +73,12 @@ const HERO_ITEMS = [
     overlay: 'none'
   },
   {
+    type: 'image',
+    url: 'https://i.postimg.cc/2ytR10TC/Whats_App_Image_2026_03_29_at_10_32_54.jpg',
+    showText: false,
+    overlay: 'none'
+  },
+  {
     type: 'video',
     url: 'https://ik.imagekit.io/marioigor82/Propaganda%20Emerson%20Lima%20-%20Video.mp4',
     showText: false,
@@ -101,8 +107,20 @@ const GALLERY_VIDEOS = [
 const GALLERY_IMAGES = [
   "https://i.postimg.cc/Vs7hzdGf/FLYER-EMERSON2.png",
   "https://i.postimg.cc/PqhyWjVG/FLYER-EMERSON3.webp",
-  "https://i.postimg.cc/jS8677f0/FLYER-EMERSON7.webp",
-  "https://i.postimg.cc/Kvj8Y3mC/FLYER-EMERSON11.webp"
+  "https://i.postimg.cc/Kvj8Y3mC/FLYER-EMERSON11.webp",
+  "https://i.postimg.cc/2ytR10TC/Whats-App-Image-2026-03-29-at-10-32-54.jpg",
+  "https://i.postimg.cc/4y0kYWws/Whats-App-Image-2026-03-29-at-10-32-54-(1).jpg",
+  "https://i.postimg.cc/SRPFngVq/Whats-App-Image-2026-03-29-at-10-32-54-(2).jpg",
+  "https://i.postimg.cc/kGH32TwC/Whats-App-Image-2026-03-29-at-10-32-55.jpg",
+  "https://i.postimg.cc/SRPFngVh/Whats-App-Image-2026-03-29-at-10-32-55-(1).jpg",
+  "https://i.postimg.cc/KjWS10Qh/Whats-App-Image-2026-03-29-at-10-32-55-(2).jpg",
+  "https://i.postimg.cc/8cYQ7ZwQ/Whats-App-Image-2026-03-29-at-10-32-56.jpg",
+  "https://i.postimg.cc/qqFVN1Qf/Whats-App-Image-2026-03-29-at-10-32-56-(1).jpg",
+  "https://i.postimg.cc/Y0PKvdR5/Whats-App-Image-2026-03-29-at-10-32-57.jpg",
+  "https://i.postimg.cc/vTKF40hK/Whats-App-Image-2026-03-29-at-10-32-58.jpg",
+  "https://i.postimg.cc/nrWbX325/Whats-App-Image-2026-03-29-at-10-32-58-(1).jpg",
+  "https://i.postimg.cc/WzyLd58C/Whats-App-Image-2026-03-29-at-10-32-58-(2).jpg",
+  "https://i.postimg.cc/RhY5Wgd2/Whats-App-Image-2026-03-29-at-10-32-58-(3).jpg"
 ];
 
 const GOOGLE_REVIEWS = [

@@ -30,7 +30,7 @@ const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}`;
 const LOGO_URL = "https://i.postimg.cc/T1HpDgQZ/Logo-Emerson-Lima-Mudanca-2-Copia.png";
 
 const SOCIAL_LINKS = {
-  facebook: "https://www.facebook.com/Emersonlimamudanca",
+  facebook: "https://www.facebook.com/share/18TUgE4Cr1/",
   instagram: "https://www.instagram.com/emersonlimamudanca",
   youtube: "https://www.youtube.com/@Emersonlimamudança",
   tiktok: "https://www.tiktok.com/@emersonlima98?is_from_webapp=1&sender_device=pc"
@@ -86,17 +86,22 @@ const GALLERY_VIDEOS = [
   "https://ik.imagekit.io/marioigor82/V%C3%ADdeo%203.mp4",
   "https://ik.imagekit.io/marioigor82/V%C3%ADdeo%204.mp4",
   "https://ik.imagekit.io/marioigor82/V%C3%ADdeo%205.mp4",
-  "https://ik.imagekit.io/marioigor82/V%C3%ADdeo%206.mp4"
+  "https://ik.imagekit.io/marioigor82/V%C3%ADdeo%206.mp4",
+  "https://ik.imagekit.io/marioigor82/1.mp4",
+  "https://ik.imagekit.io/marioigor82/2.mp4",
+  "https://ik.imagekit.io/marioigor82/3.mp4",
+  "https://ik.imagekit.io/marioigor82/4.mp4",
+  "https://ik.imagekit.io/marioigor82/5.mp4",
+  "https://ik.imagekit.io/marioigor82/6.mp4",
+  "https://ik.imagekit.io/marioigor82/7.mp4",
+  "https://ik.imagekit.io/marioigor82/8.mp4",
+  "https://ik.imagekit.io/marioigor82/9.mp4"
 ];
 
 const GALLERY_IMAGES = [
   "https://i.postimg.cc/Vs7hzdGf/FLYER-EMERSON2.png",
   "https://i.postimg.cc/PqhyWjVG/FLYER-EMERSON3.webp",
-  "https://i.postimg.cc/m2HyKDK3/FLYER-EMERSON4.webp",
-  "https://i.postimg.cc/8c8mCg6n/FLYER-EMERSON6.webp",
   "https://i.postimg.cc/jS8677f0/FLYER-EMERSON7.webp",
-  "https://i.postimg.cc/7LGzJQDc/FLYER-EMERSON10.webp",
-  "https://i.postimg.cc/ZqBNvDZf/FLYER-EMERSON9.jpg",
   "https://i.postimg.cc/Kvj8Y3mC/FLYER-EMERSON11.webp"
 ];
 
